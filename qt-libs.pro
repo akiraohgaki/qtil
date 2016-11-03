@@ -9,26 +9,26 @@ QT += \
 CONFIG += c++11
 
 SOURCES += \
-    src/libs/utils/config.cpp \
-    src/libs/utils/network.cpp \
-    src/libs/utils/file.cpp \
-    src/libs/utils/json.cpp \
-    src/libs/utils/package.cpp
+    $${PWD}/src/libs/utils/config.cpp \
+    $${PWD}/src/libs/utils/network.cpp \
+    $${PWD}/src/libs/utils/file.cpp \
+    $${PWD}/src/libs/utils/json.cpp \
+    $${PWD}/src/libs/utils/package.cpp
 
 HEADERS += \
-    src/libs/utils/config.h \
-    src/libs/utils/network.h \
-    src/libs/utils/file.h \
-    src/libs/utils/json.h \
-    src/libs/utils/package.h
+    $${PWD}/src/libs/utils/config.h \
+    $${PWD}/src/libs/utils/network.h \
+    $${PWD}/src/libs/utils/file.h \
+    $${PWD}/src/libs/utils/json.h \
+    $${PWD}/src/libs/utils/package.h
 
-DISTFILES += README.txt
+DISTFILES += $${PWD}/README.txt
 
 # Android
 android {
     QT += androidextras
 
-    SOURCES += src/libs/utils/android.cpp
+    SOURCES += $${PWD}/src/libs/utils/android.cpp
 
-    HEADERS += src/libs/utils/android.h
+    HEADERS += $${PWD}/src/libs/utils/android.h
 }
