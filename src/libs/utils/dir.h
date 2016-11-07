@@ -12,9 +12,7 @@
 #pragma once
 
 #include <QObject>
-
-class QFileInfo;
-typedef QList<QFileInfo> QFileInfoList;
+#include <QFileInfoList>
 
 namespace utils {
 
