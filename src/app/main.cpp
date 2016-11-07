@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QCoreApplication>
 
 #include "../libs/utils/config.h"
@@ -14,5 +15,11 @@ int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
 
-    return app.exec();
+    // testing ////////////////////////////////////////////
+
+    qDebug() << "testing";
+
+    // testing ////////////////////////////////////////////
+
+    app.exit();
 }
