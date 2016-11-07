@@ -65,7 +65,11 @@ bool Dir::copy(const QString &newPath)
 bool Dir::move(const QString &newPath)
 {
     QDir dir(path());
-    return dir.rename(path(), newPath);
+    if (dir.rename(path(), newPath)) {
+        setPath(newPath);
+        return true;
+    }
+    return false;
 }
 
 bool Dir::remove()
