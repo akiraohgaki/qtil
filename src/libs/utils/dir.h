@@ -27,6 +27,7 @@ public:
 
     QString path() const;
     void setPath(const QString &path);
+
     bool exists();
     QFileInfoList list();
     bool make();
