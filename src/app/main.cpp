@@ -3,6 +3,7 @@
 #include "../libs/utils/config.h"
 #include "../libs/utils/network.h"
 #include "../libs/utils/file.h"
+#include "../libs/utils/dir.h"
 #include "../libs/utils/json.h"
 #include "../libs/utils/package.h"
 #if defined(Q_OS_ANDROID)
