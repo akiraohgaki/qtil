@@ -12,6 +12,8 @@
 #pragma once
 
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonArray>
 
 namespace utils {
 
@@ -20,11 +22,22 @@ class Json : public QObject
     Q_OBJECT
 
 public:
-    explicit Json(QObject *parent = 0);
+    explicit Json(const QString &json, QObject *parent = 0);
+    explicit Json(const QJsonObject &object, QObject *parent = 0);
+    explicit Json(const QJsonArray &array, QObject *parent = 0);
 
-    static QString convertObjToStr(const QJsonObject &jsonObj);
-    static QJsonObject convertStrToObj(const QString &json);
-    static bool isValid(const QString &json);
+    QString json() const;
+    void setJson(const QString &json);
+
+    bool isValid();
+    bool isObject();
+    bool isArray();
+    QString toJson();
+    QJsonObject toObject();
+    QJsonArray toArray();
+
+private:
+    QString json_;
 };
 
 } // namespace utils

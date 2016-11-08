@@ -12,39 +12,76 @@
 #include "json.h"
 
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QJsonParseError>
 
 namespace utils {
 
-Json::Json(QObject *parent) : QObject(parent)
+Json::Json(const QString &json, QObject *parent) :
+    QObject(parent), json_(json)
 {}
 
-QString Json::convertObjToStr(const QJsonObject &jsonObj)
+Json::Json(const QJsonObject &object, QObject *parent) :
+    QObject(parent)
 {
-    QJsonDocument jsonDoc(jsonObj);
-    return QString::fromUtf8(jsonDoc.toJson());
+    QJsonDocument doc(object);
+    setJson(QString::fromUtf8(doc.toJson()));
 }
 
-QJsonObject Json::convertStrToObj(const QString &json)
+Json::Json(const QJsonArray &array, QObject *parent) :
+    QObject(parent)
 {
-    QJsonObject jsonObj;
-    QJsonParseError jsonError;
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(json.toUtf8(), &jsonError);
-    if (jsonError.error == QJsonParseError::NoError && jsonDoc.isObject()) {
-        jsonObj = jsonDoc.object();
-    }
-    return jsonObj;
+    QJsonDocument doc(array);
+    setJson(QString::fromUtf8(doc.toJson()));
 }
 
-bool Json::isValid(const QString &json)
+QString Json::json() const
 {
-    QJsonParseError jsonError;
-    QJsonDocument::fromJson(json.toUtf8(), &jsonError);
-    if (jsonError.error == QJsonParseError::NoError) {
+    return json_;
+}
+
+void Json::setJson(const QString &json)
+{
+    json_ = json;
+}
+
+bool Json::isValid()
+{
+    QJsonParseError parseError;
+    QJsonDocument::fromJson(json().toUtf8(), &parseError);
+    if (parseError.error == QJsonParseError::NoError) {
         return true;
     }
     return false;
+}
+
+bool Json::isObject()
+{
+    QJsonDocument doc = QJsonDocument::fromJson(json().toUtf8());
+    return doc.isObject();
+}
+
+bool Json::isArray()
+{
+    QJsonDocument doc = QJsonDocument::fromJson(json().toUtf8());
+    return doc.isArray();
+}
+
+QString Json::toJson()
+{
+    QJsonDocument doc = QJsonDocument::fromJson(json().toUtf8());
+    return QString::fromUtf8(doc.toJson());
+}
+
+QJsonObject Json::toObject()
+{
+    QJsonDocument doc = QJsonDocument::fromJson(json().toUtf8());
+    return doc.object();
+}
+
+QJsonArray Json::toArray()
+{
+    QJsonDocument doc = QJsonDocument::fromJson(json().toUtf8());
+    return doc.array();
 }
 
 } // namespace utils
