@@ -12,9 +12,8 @@
 #include "network.h"
 
 #include <QEventLoop>
-#include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 namespace utils {
 
@@ -22,7 +21,7 @@ Network::Network(const bool &async, QObject *parent) :
     QObject(parent), async_(async)
 {
     manager_ = new QNetworkAccessManager(this);
-    connect(manager_, &QNetworkAccessManager::finished, this, &utils::Network::finished);
+    connect(manager_, &QNetworkAccessManager::finished, this, &Network::finished);
     if (!async_) {
         eventLoop_ = new QEventLoop();
         connect(manager_, &QNetworkAccessManager::finished, eventLoop_, &QEventLoop::quit);
@@ -49,7 +48,7 @@ QNetworkReply *Network::head(const QUrl &uri)
 QNetworkReply *Network::get(const QUrl &uri)
 {
     QNetworkReply *reply = manager_->get(QNetworkRequest(uri));
-    connect(reply, &QNetworkReply::downloadProgress, this, &utils::Network::downloadProgress);
+    connect(reply, &QNetworkReply::downloadProgress, this, &Network::downloadProgress);
     if (!async_) {
         eventLoop_->exec();
     }

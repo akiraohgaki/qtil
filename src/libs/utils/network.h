@@ -12,10 +12,11 @@
 #pragma once
 
 #include <QObject>
+#include <QUrl>
+#include <QNetworkReply>
 
 class QEventLoop;
 class QNetworkAccessManager;
-class QNetworkReply;
 
 namespace utils {
 
