@@ -17,40 +17,36 @@
 
 namespace utils {
 
-Config::Config(const QString &configDir, QObject *parent) :
-    QObject(parent), configDir_(configDir)
+Config::Config(const QString &configDirPath, QObject *parent) :
+    QObject(parent), configDirPath_(configDirPath)
 {}
 
-QString Config::configDir() const
+QString Config::configDirPath() const
 {
-    return configDir_;
+    return configDirPath_;
 }
 
-void Config::setConfigDir(const QString &configDir)
+void Config::setConfigDirPath(const QString &configDirPath)
 {
-    configDir_ = configDir;
+    configDirPath_ = configDirPath;
 }
 
 QJsonObject Config::get(const QString &name)
 {
-    QString configFile = configDir() + "/" + name + ".json";
-    if (!cacheData_.contains(name)) {
-        QString json = utils::File(configFile).readText();
-        if (json.isEmpty()) {
-            json = "{}"; // Blank JSON data as default
-        }
-        cacheData_[name] = utils::Json(json).toObject();
+    QString configFilePath = configDirPath() + "/" + name + ".json";
+    QString json = utils::File(configFilePath).readText();
+    if (json.isEmpty()) {
+        json = "{}"; // Blank JSON data as default
     }
-    return cacheData_[name].toObject();
+    return utils::Json(json).toObject();
 }
 
 bool Config::set(const QString &name, const QJsonObject &object)
 {
-    QString configFile = configDir() + "/" + name + ".json";
+    QString configFilePath = configDirPath() + "/" + name + ".json";
     QString json = utils::Json(object).toJson();
-    utils::Dir(configDir()).make();
-    if (utils::File(configFile).writeText(json)) {
-        cacheData_[name] = object;
+    utils::Dir(configDirPath()).make();
+    if (utils::File(configFilePath).writeText(json)) {
         return true;
     }
     return false;

@@ -21,17 +21,16 @@ class Config : public QObject
     Q_OBJECT
 
 public:
-    explicit Config(const QString &configDir, QObject *parent = 0);
+    explicit Config(const QString &configDirPath, QObject *parent = 0);
 
-    QString configDir() const;
-    void setConfigDir(const QString &configDir);
+    QString configDirPath() const;
+    void setConfigDirPath(const QString &configDirPath);
 
     QJsonObject get(const QString &name);
     bool set(const QString &name, const QJsonObject &object);
 
 private:
-    QString configDir_;
-    QJsonObject cacheData_;
+    QString configDirPath_;
 };
 
 } // namespace utils
