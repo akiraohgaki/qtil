@@ -36,6 +36,16 @@ Network::~Network()
     }
 }
 
+QUrl Network::url() const
+{
+    return url_;
+}
+
+void Network::setUrl(const QUrl &url)
+{
+    url_ = url;
+}
+
 QNetworkReply *Network::head(const QUrl &uri)
 {
     QNetworkReply *reply = manager_->head(QNetworkRequest(uri));

@@ -28,6 +28,9 @@ public:
     explicit Network(const bool &async = true, QObject *parent = 0);
     ~Network();
 
+    QUrl url() const;
+    void setUrl(const QUrl &url);
+
     QNetworkReply *head(const QUrl &uri);
     QNetworkReply *get(const QUrl &uri);
 
@@ -36,6 +39,7 @@ signals:
     void downloadProgress(const qint64 &received, const qint64 &total);
 
 private:
+    QUrl url_;
     bool async_;
     QNetworkAccessManager *manager_;
     QEventLoop *eventLoop_;
