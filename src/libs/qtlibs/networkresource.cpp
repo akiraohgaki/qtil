@@ -101,11 +101,20 @@ NetworkResource *NetworkResource::get()
     return send(async(), networkRequest);
 }
 
+QByteArray NetworkResource::readData()
+{
+    QByteArray data;
+    if (reply()->isFinished()) {
+        data = reply()->readAll();
+    }
+    return data;
+}
+
 bool NetworkResource::saveData(const QString &path)
 {
     if (reply()->isFinished()) {
         qtlibs::File file(path);
-        return file.writeBinary(reply()->readAll());
+        return file.writeData(readData());
     }
     return false;
 }
