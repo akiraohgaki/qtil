@@ -11,50 +11,48 @@
 
 #include "package.h"
 
+#ifdef QTLIBS_UNIX
 #include <QJsonObject>
 #include <QMimeDatabase>
 #include <QProcess>
+#endif
 
+#ifdef QTLIBS_ANDROID
 #include <QAndroidJniObject>
+#endif
 
 namespace qtlibs {
 
-Package::Package(QObject *parent) : QObject(parent)
+Package::Package(const QString &path, QObject *parent) :
+    QObject(parent), path_(path)
 {}
 
-bool Package::installProgram(const QString &path, const QString &targetPath)
+QString Package::path() const
 {
-    QString program = "install";
-    QStringList arguments;
-    arguments << "-m" << "755" << "-p" << path << targetPath;
-    return execute(program, arguments);
+    return path_;
 }
 
-bool Package::installFile(const QString &path, const QString &targetPath)
+void Package::setPath(const QString &path)
 {
-    QString program = "install";
-    QStringList arguments;
-    arguments << "-m" << "644" << "-p" << path << targetPath;
-    return execute(program, arguments);
+    path_ = path;
 }
 
-bool Package::installPlasmapkg(const QString &path, const QString &type)
+#ifdef QTLIBS_UNIX
+bool Package::installAsProgram(const QString &newPath)
 {
-    QString program = "plasmapkg2";
     QStringList arguments;
-    arguments << "-t" << type << "-i" << path;
-    return execute(program, arguments);
+    arguments << "-m" << "755" << "-p" << path() << newPath;
+    return execute("install", arguments);
 }
 
-bool Package::uninstallPlasmapkg(const QString &path, const QString &type)
+bool Package::installAsFile(const QString &newPath)
 {
-    QString program = "plasmapkg2";
     QStringList arguments;
-    arguments << "-t" << type << "-r" << path;
-    return execute(program, arguments);
+    arguments << "-m" << "644" << "-p" << path() << newPath;
+    return execute("install", arguments);
 }
 
-bool Package::uncompressArchive(const QString &path, const QString &targetDir)
+bool Package::installAsArchive(const QString &destinationDirPath)
 {
     QJsonObject archiveTypes;
     archiveTypes["application/x-tar"] = QString("tar");
@@ -77,42 +75,54 @@ bool Package::uncompressArchive(const QString &path, const QString &targetDir)
     archiveTypes["application/x-rar-compressed"] = QString("rar");
 
     QMimeDatabase mimeDb;
-    QString mimeType = mimeDb.mimeTypeForFile(path).name();
+    QString mimeType = mimeDb.mimeTypeForFile(path()).name();
 
     if (archiveTypes.contains(mimeType)) {
         QString archiveType = archiveTypes[mimeType].toString();
-
         QString program;
         QStringList arguments;
-
         if (archiveType == "tar") {
             program = "tar";
-            arguments << "-xf" << path << "-C" << targetDir;
+            arguments << "-xf" << path() << "-C" << destinationDirPath;
         }
         else if (archiveType == "zip") {
             program = "unzip";
-            arguments << "-o" << path << "-d" << targetDir;
+            arguments << "-o" << path() << "-d" << destinationDirPath;
         }
         else if (archiveType == "7z") {
             program = "7z";
-            arguments << "x" << path << "-o" + targetDir; // No space between -o and directory
+            arguments << "x" << path() << "-o" + destinationDirPath; // No space between -o and directory
         }
         else if (archiveType == "rar") {
             program = "unrar";
-            arguments << "e" << path << targetDir;
+            arguments << "e" << path() << destinationDirPath;
         }
-
         return execute(program, arguments);
     }
-
     return false;
 }
 
-bool Package::openApk(const QString &uri)
+bool Package::installAsPlasmapkg(const QString &type)
+{
+    QStringList arguments;
+    arguments << "-t" << type << "-i" << path();
+    return execute("plasmapkg2", arguments);
+}
+
+bool Package::uninstallAsPlasmapkg(const QString &type)
+{
+    QStringList arguments;
+    arguments << "-t" << type << "-r" << path();
+    return execute("plasmapkg2", arguments);
+}
+#endif
+
+#ifdef QTLIBS_ANDROID
+bool Package::installAsApk()
 {
     QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
     if (activity.isValid()) {
-        QAndroidJniObject fileUri = QAndroidJniObject::fromString(uri);
+        QAndroidJniObject fileUri = QAndroidJniObject::fromString(path());
         QAndroidJniObject parsedUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", fileUri.object());
         QAndroidJniObject mimeType = QAndroidJniObject::fromString("application/vnd.android.package-archive");
         QAndroidJniObject activityKind = QAndroidJniObject::fromString("android.intent.action.VIEW");
@@ -124,7 +134,9 @@ bool Package::openApk(const QString &uri)
     }
     return false;
 }
+#endif
 
+#ifdef QTLIBS_UNIX
 bool Package::execute(const QString &program, const QStringList &arguments)
 {
     QProcess process;
@@ -135,5 +147,6 @@ bool Package::execute(const QString &program, const QStringList &arguments)
     }
     return false;
 }
+#endif
 
 } // namespace qtlibs

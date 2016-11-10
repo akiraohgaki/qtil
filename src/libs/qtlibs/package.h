@@ -20,18 +20,29 @@ class Package : public QObject
     Q_OBJECT
 
 public:
-    explicit Package(QObject *parent = 0);
+    explicit Package(const QString &path, QObject *parent = 0);
 
-    static bool installProgram(const QString &path, const QString &targetPath);
-    static bool installFile(const QString &path, const QString &targetPath);
-    static bool installPlasmapkg(const QString &path, const QString &type = "plasmoid");
-    static bool uninstallPlasmapkg(const QString &path, const QString &type = "plasmoid");
-    static bool uncompressArchive(const QString &path, const QString &targetDir);
+    QString path() const;
+    void setPath(const QString &path);
 
-    static bool openApk(const QString &uri);
+#ifdef QTLIBS_UNIX
+    bool installAsProgram(const QString &newPath);
+    bool installAsFile(const QString &newPath);
+    bool installAsArchive(const QString &destinationDirPath);
+    bool installAsPlasmapkg(const QString &type = "plasmoid");
+    bool uninstallAsPlasmapkg(const QString &type = "plasmoid");
+#endif
+
+#ifdef QTLIBS_ANDROID
+    bool installAsApk();
+#endif
 
 private:
-    static bool execute(const QString &program, const QStringList &arguments);
+#ifdef QTLIBS_UNIX
+    bool execute(const QString &program, const QStringList &arguments);
+#endif
+
+    QString path_;
 };
 
 } // namespace qtlibs
