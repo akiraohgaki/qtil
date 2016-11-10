@@ -5,7 +5,7 @@
 #include "utils/dir.h"
 #include "utils/json.h"
 #include "utils/config.h"
-#include "utils/network.h"
+#include "utils/networkresource.h"
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_IOS) && !defined(Q_OS_ANDROID)
 #include "utils/package.h"
