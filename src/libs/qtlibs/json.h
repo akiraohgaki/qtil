@@ -22,22 +22,23 @@ class Json : public QObject
     Q_OBJECT
 
 public:
-    explicit Json(const QString &json, QObject *parent = 0);
+    explicit Json(const QByteArray &json, QObject *parent = 0);
+    explicit Json(const QString &string, QObject *parent = 0);
     explicit Json(const QJsonObject &object, QObject *parent = 0);
     explicit Json(const QJsonArray &array, QObject *parent = 0);
 
-    QString json() const;
-    void setJson(const QString &json);
+    QByteArray json() const;
+    void setJson(const QByteArray &json);
 
     bool isValid();
     bool isObject();
     bool isArray();
-    QString toJson();
+    QByteArray toJson();
     QJsonObject toObject();
     QJsonArray toArray();
 
 private:
-    QString json_;
+    QByteArray json_;
 };
 
 } // namespace qtlibs
