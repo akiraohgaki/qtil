@@ -28,6 +28,8 @@ public:
     static bool uninstallPlasmapkg(const QString &path, const QString &type = "plasmoid");
     static bool uncompressArchive(const QString &path, const QString &targetDir);
 
+    static bool openApk(const QString &uri);
+
 private:
     static bool execute(const QString &program, const QStringList &arguments);
 };

@@ -7,26 +7,24 @@ HEADERS += \
     $${PWD}/dir.h \
     $${PWD}/json.h \
     $${PWD}/config.h \
-    $${PWD}/networkresource.h
+    $${PWD}/networkresource.h \
+    $${PWD}/package.h
 
 SOURCES += \
     $${PWD}/file.cpp \
     $${PWD}/dir.cpp \
     $${PWD}/json.cpp \
     $${PWD}/config.cpp \
-    $${PWD}/networkresource.cpp
+    $${PWD}/networkresource.cpp \
+    $${PWD}/package.cpp
 
 # Unix
 unix:!ios:!android {
-    HEADERS += $${PWD}/package.h
-    SOURCES += $${PWD}/package.cpp
     DEFINES += QTLIBS_UNIX
 }
 
 # Android
 android {
     QT += androidextras
-    HEADERS += $${PWD}/android.h
-    SOURCES += $${PWD}/android.cpp
     DEFINES += QTLIBS_ANDROID
 }
