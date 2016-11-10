@@ -111,8 +111,7 @@ QByteArray NetworkResource::readData()
 bool NetworkResource::saveData(const QString &path)
 {
     if (reply()->isFinished()) {
-        qtlibs::File file(path);
-        return file.writeData(readData());
+        return qtlibs::File(path).writeData(readData());
     }
     return false;
 }
