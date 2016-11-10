@@ -37,6 +37,28 @@ bool File::exists()
     return file.exists();
 }
 
+QByteArray File::readData()
+{
+    QByteArray data;
+    QFile file(path());
+    if (file.exists() && file.open(QIODevice::ReadOnly)) {
+        data = file.readAll();
+        file.close();
+    }
+    return data;
+}
+
+bool File::writeData(const QByteArray &data)
+{
+    QFile file(path());
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(data);
+        file.close();
+        return true;
+    }
+    return false;
+}
+
 QString File::readText()
 {
     QString data;
@@ -57,28 +79,6 @@ bool File::writeText(const QString &data)
         QTextStream out(&file);
         out.setCodec("UTF-8");
         out << data;
-        file.close();
-        return true;
-    }
-    return false;
-}
-
-QByteArray File::readBinary()
-{
-    QByteArray data;
-    QFile file(path());
-    if (file.exists() && file.open(QIODevice::ReadOnly)) {
-        data = file.readAll();
-        file.close();
-    }
-    return data;
-}
-
-bool File::writeBinary(const QByteArray &data)
-{
-    QFile file(path());
-    if (file.open(QIODevice::WriteOnly)) {
-        file.write(data);
         file.close();
         return true;
     }

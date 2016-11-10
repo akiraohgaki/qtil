@@ -26,10 +26,10 @@ public:
     void setPath(const QString &path);
 
     bool exists();
+    QByteArray readData();
+    bool writeData(const QByteArray &data);
     QString readText();
     bool writeText(const QString &data);
-    QByteArray readBinary();
-    bool writeBinary(const QByteArray &data);
     bool copy(const QString &newPath);
     bool move(const QString &newPath);
     bool remove();
