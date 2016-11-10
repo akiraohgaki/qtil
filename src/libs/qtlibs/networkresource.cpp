@@ -101,7 +101,7 @@ NetworkResource *NetworkResource::get()
     return send(async(), networkRequest);
 }
 
-bool NetworkResource::saveAsFile(const QString &path)
+bool NetworkResource::saveData(const QString &path)
 {
     if (reply()->isFinished()) {
         qtlibs::File file(path);

@@ -41,7 +41,7 @@ public:
 
     NetworkResource *head();
     NetworkResource *get();
-    bool saveAsFile(const QString &path);
+    bool saveData(const QString &path);
 
 signals:
     void finished(NetworkResource *resource);
