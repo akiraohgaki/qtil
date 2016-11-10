@@ -1,18 +1,18 @@
 #include <QDebug>
 #include <QCoreApplication>
 
-#include "utils/file.h"
-#include "utils/dir.h"
-#include "utils/json.h"
-#include "utils/config.h"
-#include "utils/networkresource.h"
+#include "qtlibs/file.h"
+#include "qtlibs/dir.h"
+#include "qtlibs/json.h"
+#include "qtlibs/config.h"
+#include "qtlibs/networkresource.h"
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_IOS) && !defined(Q_OS_ANDROID)
-#include "utils/package.h"
+#include "qtlibs/package.h"
 #endif
 
 #if defined(Q_OS_ANDROID)
-#include "utils/android.h"
+#include "qtlibs/android.h"
 #endif
 
 int main(int argc, char *argv[])
