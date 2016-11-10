@@ -7,14 +7,14 @@ SOURCES += \
     $${PWD}/dir.cpp \
     $${PWD}/json.cpp \
     $${PWD}/config.cpp \
-    $${PWD}/network.cpp
+    $${PWD}/networkresource.cpp
 
 HEADERS += \
     $${PWD}/file.h \
     $${PWD}/dir.h \
     $${PWD}/json.h \
     $${PWD}/config.h \
-    $${PWD}/network.h
+    $${PWD}/networkresource.h
 
 # Unix
 unix:!ios:!android {
