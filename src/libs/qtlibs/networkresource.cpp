@@ -17,12 +17,10 @@
 
 namespace qtlibs {
 
-NetworkResource::NetworkResource(const QString &name, const QUrl &url, QObject *parent) :
-    QObject(parent), name_(name), url_(url)
+NetworkResource::NetworkResource(const QString &name, const QUrl &url, const bool &async, QObject *parent) :
+    QObject(parent), name_(name), url_(url), async_(async)
 {
-    setAsync(true);
     setManager(new QNetworkAccessManager(this));
-    setMethod("GET");
 }
 
 NetworkResource::~NetworkResource()
