@@ -1,9 +1,9 @@
-DISTFILES += README.txt
+include(src/app/app.pri)
+
+include(src/libs/qtlibs/qtlibs.pri)
 
 INCLUDEPATH += \
     src/app \
     src/libs
 
-include(src/app/app.pri)
-
-include(src/libs/qtlibs/qtlibs.pri)
+DISTFILES += README.txt

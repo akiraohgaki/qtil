@@ -7,11 +7,11 @@
 #include "qtlibs/config.h"
 #include "qtlibs/networkresource.h"
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_IOS) && !defined(Q_OS_ANDROID)
+#if defined(QTLIBS_UNIX)
 #include "qtlibs/package.h"
 #endif
 
-#if defined(Q_OS_ANDROID)
+#if defined(QTLIBS_ANDROID)
 #include "qtlibs/android.h"
 #endif
 
