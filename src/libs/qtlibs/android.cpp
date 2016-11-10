@@ -6,14 +6,14 @@
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0  The GNU Lesser General Public License, version 3.0
- * @link        https://github.com/akiraohgaki/qt-libs
+ * @link        https://github.com/akiraohgaki/qtlibs
  */
 
 #include "android.h"
 
 #include <QAndroidJniObject>
 
-namespace utils {
+namespace qtlibs {
 
 Android::Android(QObject *parent) : QObject(parent)
 {}
@@ -35,4 +35,4 @@ bool Android::openApk(const QString &uri)
     return false;
 }
 
-} // namespace utils
+} // namespace qtlibs

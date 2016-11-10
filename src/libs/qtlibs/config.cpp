@@ -6,7 +6,7 @@
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0  The GNU Lesser General Public License, version 3.0
- * @link        https://github.com/akiraohgaki/qt-libs
+ * @link        https://github.com/akiraohgaki/qtlibs
  */
 
 #include "config.h"
@@ -15,7 +15,7 @@
 #include "dir.h"
 #include "json.h"
 
-namespace utils {
+namespace qtlibs {
 
 Config::Config(const QString &configDirPath, QObject *parent) :
     QObject(parent), configDirPath_(configDirPath)
@@ -34,22 +34,22 @@ void Config::setConfigDirPath(const QString &configDirPath)
 QJsonObject Config::get(const QString &name)
 {
     QString configFilePath = configDirPath() + "/" + name + ".json";
-    QString json = utils::File(configFilePath).readText();
+    QString json = qtlibs::File(configFilePath).readText();
     if (json.isEmpty()) {
         json = "{}"; // Blank JSON data as default
     }
-    return utils::Json(json).toObject();
+    return qtlibs::Json(json).toObject();
 }
 
 bool Config::set(const QString &name, const QJsonObject &object)
 {
     QString configFilePath = configDirPath() + "/" + name + ".json";
-    QString json = utils::Json(object).toJson();
-    utils::Dir(configDirPath()).make();
-    if (utils::File(configFilePath).writeText(json)) {
+    QString json = qtlibs::Json(object).toJson();
+    qtlibs::Dir(configDirPath()).make();
+    if (qtlibs::File(configFilePath).writeText(json)) {
         return true;
     }
     return false;
 }
 
-} // namespace utils
+} // namespace qtlibs

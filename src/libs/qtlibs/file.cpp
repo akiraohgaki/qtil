@@ -6,7 +6,7 @@
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0  The GNU Lesser General Public License, version 3.0
- * @link        https://github.com/akiraohgaki/qt-libs
+ * @link        https://github.com/akiraohgaki/qtlibs
  */
 
 #include "file.h"
@@ -15,7 +15,7 @@
 #include <QTextStream>
 #include <QFile>
 
-namespace utils {
+namespace qtlibs {
 
 File::File(const QString &path, QObject *parent) :
     QObject(parent), path_(path)
@@ -103,4 +103,4 @@ bool File::remove()
     return file.remove();
 }
 
-} // namespace utils
+} // namespace qtlibs

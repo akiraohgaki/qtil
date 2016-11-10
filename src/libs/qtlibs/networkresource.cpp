@@ -6,7 +6,7 @@
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0  The GNU Lesser General Public License, version 3.0
- * @link        https://github.com/akiraohgaki/qt-libs
+ * @link        https://github.com/akiraohgaki/qtlibs
  */
 
 #include "networkresource.h"
@@ -15,7 +15,7 @@
 
 #include "file.h"
 
-namespace utils {
+namespace qtlibs {
 
 NetworkResource::NetworkResource(const QString &name, const QUrl &url, QObject *parent) :
     QObject(parent), name_(name), url_(url)
@@ -104,7 +104,7 @@ NetworkResource *NetworkResource::get()
 bool NetworkResource::saveAsFile(const QString &path)
 {
     if (reply()->isFinished()) {
-        utils::File file(path);
+        qtlibs::File file(path);
         return file.writeBinary(reply()->readAll());
     }
     return false;
@@ -175,4 +175,4 @@ NetworkResource *NetworkResource::send(const bool &async, const QNetworkRequest 
     return this;
 }
 
-} // namespace utils
+} // namespace qtlibs

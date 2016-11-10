@@ -6,7 +6,7 @@
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0  The GNU Lesser General Public License, version 3.0
- * @link        https://github.com/akiraohgaki/qt-libs
+ * @link        https://github.com/akiraohgaki/qtlibs
  */
 
 #include "package.h"
@@ -15,7 +15,7 @@
 #include <QMimeDatabase>
 #include <QProcess>
 
-namespace utils {
+namespace qtlibs {
 
 Package::Package(QObject *parent) : QObject(parent)
 {}
@@ -117,4 +117,4 @@ bool Package::execute(const QString &program, const QStringList &arguments)
     return false;
 }
 
-} // namespace utils
+} // namespace qtlibs

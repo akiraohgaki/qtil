@@ -6,4 +6,4 @@ INCLUDEPATH += \
 
 include(src/app/app.pri)
 
-include(src/libs/utils/utils.pri)
+include(src/libs/qtlibs/qtlibs.pri)
