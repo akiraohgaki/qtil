@@ -26,5 +26,4 @@ unix:!ios:!android {
 # Android
 android {
     QT += androidextras
-    DEFINES += QTLIBS_ANDROID
 }

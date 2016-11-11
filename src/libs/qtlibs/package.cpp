@@ -17,7 +17,7 @@
 #include <QProcess>
 #endif
 
-#ifdef QTLIBS_ANDROID
+#ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>
 #endif
 
@@ -117,7 +117,7 @@ bool Package::uninstallAsPlasmapkg(const QString &type)
 }
 #endif
 
-#ifdef QTLIBS_ANDROID
+#ifdef Q_OS_ANDROID
 bool Package::installAsApk()
 {
     QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");

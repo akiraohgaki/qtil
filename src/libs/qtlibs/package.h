@@ -33,7 +33,7 @@ public:
     bool uninstallAsPlasmapkg(const QString &type = "plasmoid");
 #endif
 
-#ifdef QTLIBS_ANDROID
+#ifdef Q_OS_ANDROID
     bool installAsApk();
 #endif
 
