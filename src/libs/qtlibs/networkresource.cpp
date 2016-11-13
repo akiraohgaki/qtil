@@ -25,6 +25,7 @@ NetworkResource::NetworkResource(const QString &name, const QUrl &url, const boo
 
 NetworkResource::~NetworkResource()
 {
+    reply()->deleteLater();
     manager()->deleteLater();
 }
 
@@ -42,8 +43,8 @@ NetworkResource::NetworkResource(const NetworkResource &other)
 
 NetworkResource &NetworkResource::operator =(const NetworkResource &other)
 {
-    manager()->deleteLater();
     reply()->deleteLater();
+    manager()->deleteLater();
 
     this->setParent(other.parent());
     setName(other.name());
