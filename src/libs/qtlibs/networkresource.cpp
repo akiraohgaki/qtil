@@ -42,6 +42,9 @@ NetworkResource::NetworkResource(const NetworkResource &other)
 
 NetworkResource &NetworkResource::operator =(const NetworkResource &other)
 {
+    manager()->deleteLater();
+    reply()->deleteLater();
+
     this->setParent(other.parent());
     setName(other.name());
     setUrl(other.url());
