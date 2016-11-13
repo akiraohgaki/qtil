@@ -32,12 +32,14 @@ public:
     QByteArray json() const;
     void setJson(const QByteArray &json);
 
-    bool isValid();
-    bool isObject();
-    bool isArray();
+    void fromObject(const QJsonObject &object);
+    void fromArray(const QJsonArray &array);
     QByteArray toJson();
     QJsonObject toObject();
     QJsonArray toArray();
+    bool isValid();
+    bool isObject();
+    bool isArray();
 
 private:
     QByteArray json_;
