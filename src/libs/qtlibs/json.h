@@ -22,10 +22,13 @@ class Json : public QObject
     Q_OBJECT
 
 public:
-    explicit Json(const QByteArray &json, QObject *parent = 0);
+    explicit Json(const QByteArray &json = QByteArray(), QObject *parent = 0);
     explicit Json(const QString &string, QObject *parent = 0);
     explicit Json(const QJsonObject &object, QObject *parent = 0);
     explicit Json(const QJsonArray &array, QObject *parent = 0);
+
+    Json(const Json &other);
+    Json &operator =(const Json &other);
 
     QByteArray json() const;
     void setJson(const QByteArray &json);

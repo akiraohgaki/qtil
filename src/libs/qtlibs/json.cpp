@@ -16,28 +16,41 @@
 
 namespace qtlibs {
 
-Json::Json(const QByteArray &json, QObject *parent) :
-    QObject(parent), json_(json)
+Json::Json(const QByteArray &json, QObject *parent)
+    : QObject(parent), json_(json)
 {}
 
-Json::Json(const QString &string, QObject *parent) :
-    QObject(parent)
+Json::Json(const QString &string, QObject *parent)
+    : QObject(parent)
 {
     setJson(string.toUtf8());
 }
 
-Json::Json(const QJsonObject &object, QObject *parent) :
-    QObject(parent)
+Json::Json(const QJsonObject &object, QObject *parent)
+    : QObject(parent)
 {
     QJsonDocument doc(object);
     setJson(doc.toJson());
 }
 
-Json::Json(const QJsonArray &array, QObject *parent) :
-    QObject(parent)
+Json::Json(const QJsonArray &array, QObject *parent)
+    : QObject(parent)
 {
     QJsonDocument doc(array);
     setJson(doc.toJson());
+}
+
+Json::Json(const Json &other)
+{
+    this->setParent(other.parent());
+    setJson(other.json());
+}
+
+Json &Json::operator =(const Json &other)
+{
+    this->setParent(other.parent());
+    setJson(other.json());
+    return *this;
 }
 
 QByteArray Json::json() const
