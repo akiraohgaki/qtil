@@ -20,12 +20,6 @@ Json::Json(const QByteArray &json, QObject *parent)
     : QObject(parent), json_(json)
 {}
 
-Json::Json(const QString &string, QObject *parent)
-    : QObject(parent)
-{
-    setJson(string.toUtf8());
-}
-
 Json::Json(const QJsonObject &object, QObject *parent)
     : QObject(parent)
 {
