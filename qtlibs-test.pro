@@ -1,4 +1,4 @@
-TARGET = qtlibstest
+TARGET = qtlibs-test
 
 TEMPLATE = app
 
@@ -10,6 +10,6 @@ INCLUDEPATH += \
 
 DISTFILES += README.txt
 
-include(src/app/app.pri)
-
 include(src/libs/qtlibs/qtlibs.pri)
+
+include(src/app/app.pri)
