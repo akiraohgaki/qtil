@@ -160,6 +160,7 @@ void NetworkResource::replyFinished()
             }
             QNetworkRequest networkRequest = request();
             networkRequest.setUrl(QUrl(newUrl));
+            reply()->deleteLater();
             send(true, networkRequest);
             return;
         }
