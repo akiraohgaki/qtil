@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QUrl>
 #include <QJsonObject>
+#include <QJsonArray>
 
 namespace qtlibs {
 
