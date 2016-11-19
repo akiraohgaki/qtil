@@ -11,10 +11,17 @@
 
 #include "ocsapi.h"
 
+#include <QXmlStreamReader>
+
 #include "json.h"
 #include "networkresource.h"
 
 namespace qtlibs {
+
+/**
+ * OCS-API Specification
+ * http://www.freedesktop.org/wiki/Specifications/open-collaboration-services/
+ */
 
 OcsApi::OcsApi(const QUrl &baseUrl, QObject *parent)
     : QObject(parent), baseUrl_(baseUrl)
@@ -44,10 +51,36 @@ void OcsApi::setBaseUrl(const QUrl &baseUrl)
 
 QJsonObject OcsApi::fetchCategories()
 {
+    return QJsonObject();
 }
 
-QJsonObject OcsApi::fetchProvidersFile(const QUrl &url)
+QJsonArray OcsApi::fetchProvidersFile(const QUrl &url)
 {
+    QJsonArray providers;
+
+    QXmlStreamReader reader(qtlibs::NetworkResource("", url, false).get()->readData());
+
+    QStringList whitelist;
+    whitelist << "id" << "location" << "name" << "icon" << "termsofuse" << "register";
+
+    while (!reader.atEnd() && !reader.hasError()) {
+        reader.readNext();
+        if (reader.isStartElement() && reader.name() == "provider") {
+            QJsonObject provider;
+            provider["_providers_file"] = url.url();
+            providers.append(provider);
+            continue;
+        }
+        QString elementName = reader.name().toString();
+        if (!providers.isEmpty() && whitelist.contains(elementName)) {
+            int i(providers.size() - 1);
+            QJsonObject provider = providers[i].toObject();
+            provider[elementName] = reader.readElementText();
+            providers[i] = provider;
+        }
+    }
+
+    return providers;
 }
 
 } // namespace qtlibs

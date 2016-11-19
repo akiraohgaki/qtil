@@ -32,7 +32,7 @@ public:
 
     QJsonObject fetchCategories();
 
-    static QJsonObject fetchProvidersFile(const QUrl &url);
+    static QJsonArray fetchProvidersFile(const QUrl &url);
 
 private:
     QUrl baseUrl_;
