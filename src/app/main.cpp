@@ -37,6 +37,7 @@ public slots:
     void finished(qtlibs::NetworkResource *resource) {
         QString path = qtlibs::Dir::tempPath() + "/" + resource->url().fileName();
         resource->saveData(path);
+        resource->deleteLater();
 
         qDebug() << "Downloaded :" << path;
         qDebug() << "Finished";
