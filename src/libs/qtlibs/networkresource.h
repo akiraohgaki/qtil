@@ -63,7 +63,7 @@ private:
     void setReply(QNetworkReply *reply);
     void setMethod(const QString &method);
 
-    NetworkResource *send(bool async, const QNetworkRequest &request);
+    NetworkResource *send(bool async, const QString &method, const QNetworkRequest &request);
 
     QString name_;
     QUrl url_;

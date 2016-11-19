@@ -104,18 +104,16 @@ QString NetworkResource::method() const
 
 NetworkResource *NetworkResource::head()
 {
-    setMethod("HEAD");
     QNetworkRequest networkRequest = request();
     networkRequest.setUrl(url());
-    return send(async(), networkRequest);
+    return send(async(), "HEAD", networkRequest);
 }
 
 NetworkResource *NetworkResource::get()
 {
-    setMethod("GET");
     QNetworkRequest networkRequest = request();
     networkRequest.setUrl(url());
-    return send(async(), networkRequest);
+    return send(async(), "GET", networkRequest);
 }
 
 bool NetworkResource::isFinishedWithNoError()
@@ -166,10 +164,10 @@ void NetworkResource::replyFinished()
             if (newUrl.startsWith("/")) {
                 newUrl = reply()->url().authority() + newUrl;
             }
+            reply()->deleteLater();
             QNetworkRequest networkRequest = request();
             networkRequest.setUrl(QUrl(newUrl));
-            reply()->deleteLater();
-            send(true, networkRequest);
+            send(true, method(), networkRequest);
             return;
         }
     }
@@ -191,14 +189,18 @@ void NetworkResource::setMethod(const QString &method)
     method_ = method;
 }
 
-NetworkResource *NetworkResource::send(bool async, const QNetworkRequest &request)
+NetworkResource *NetworkResource::send(bool async, const QString &method, const QNetworkRequest &request)
 {
-    if (method() == "HEAD") {
+    setMethod(method);
+    if (method == "HEAD") {
         setReply(manager()->head(request));
     }
-    else if (method() == "GET") {
+    else if (method == "GET") {
         setReply(manager()->get(request));
         connect(reply(), &QNetworkReply::downloadProgress, this, &NetworkResource::downloadProgress);
+    }
+    else {
+        Q_ASSERT(false);
     }
     connect(reply(), &QNetworkReply::finished, this, &NetworkResource::replyFinished);
     if (!async) {
