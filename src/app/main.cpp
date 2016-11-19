@@ -7,6 +7,7 @@
 #include "qtlibs/json.h"
 #include "qtlibs/config.h"
 #include "qtlibs/networkresource.h"
+#include "qtlibs/ocsapi.h"
 #include "qtlibs/package.h"
 
 class Test : public QObject
