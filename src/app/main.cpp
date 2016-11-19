@@ -41,6 +41,8 @@ public slots:
 
         qDebug() << "Downloaded :" << path;
         qDebug() << "Finished";
+
+        QCoreApplication::exit();
     }
 };
 
