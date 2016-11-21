@@ -49,9 +49,13 @@ void OcsApi::setBaseUrl(const QUrl &baseUrl)
     baseUrl_ = baseUrl;
 }
 
-QJsonObject OcsApi::fetchCategories()
+QJsonObject OcsApi::fetchContentCategories()
 {
-    return QJsonObject();
+    QUrl base = baseUrl();
+    QUrl url = base.resolved(QUrl("content/categories"));
+    url.setQuery("format=json");
+    qtlibs::NetworkResource resource(url.toString(), url, false);
+    return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
 QJsonArray OcsApi::fetchProvidersFile(const QUrl &url)
