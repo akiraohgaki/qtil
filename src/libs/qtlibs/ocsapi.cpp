@@ -58,7 +58,8 @@ QJsonArray OcsApi::fetchProvidersFile(const QUrl &url)
 {
     QJsonArray providers;
 
-    QXmlStreamReader reader(qtlibs::NetworkResource(url.url(), url, false).get()->readData());
+    qtlibs::NetworkResource resource(url.toString(), url, false);
+    QXmlStreamReader reader(resource.get()->readData());
 
     QStringList whitelist;
     whitelist << "id" << "location" << "name" << "icon" << "termsofuse" << "register";
@@ -67,7 +68,7 @@ QJsonArray OcsApi::fetchProvidersFile(const QUrl &url)
         reader.readNext();
         if (reader.isStartElement() && reader.name() == "provider") {
             QJsonObject provider;
-            provider["_providers_file"] = url.url();
+            provider["_providers_file"] = url.toString();
             providers.append(provider);
             continue;
         }
