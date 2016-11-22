@@ -44,6 +44,7 @@ public:
 
     NetworkResource *head();
     NetworkResource *get();
+    NetworkResource *deleteResource();
     bool isFinishedWithNoError();
     QByteArray readData();
     bool saveData(const QString &path);

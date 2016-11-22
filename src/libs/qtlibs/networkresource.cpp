@@ -116,6 +116,13 @@ NetworkResource *NetworkResource::get()
     return send(async(), "GET", networkRequest);
 }
 
+NetworkResource *NetworkResource::deleteResource()
+{
+    QNetworkRequest networkRequest = request();
+    networkRequest.setUrl(url());
+    return send(async(), "DELETE", networkRequest);
+}
+
 bool NetworkResource::isFinishedWithNoError()
 {
     if (reply()->isFinished() && reply()->error() == QNetworkReply::NoError) {
@@ -198,6 +205,9 @@ NetworkResource *NetworkResource::send(bool async, const QString &method, const 
     else if (method == "GET") {
         setReply(manager()->get(request));
         connect(reply(), &QNetworkReply::downloadProgress, this, &NetworkResource::downloadProgress);
+    }
+    else if (method == "DELETE") {
+        setReply(manager()->deleteResource(request));
     }
     else {
         Q_ASSERT(false);
