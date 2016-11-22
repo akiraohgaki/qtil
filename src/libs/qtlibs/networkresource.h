@@ -55,8 +55,8 @@ public:
 
 signals:
     void finished(NetworkResource *resource);
-    void downloadProgress(const qint64 &bytesReceived, const qint64 &bytesTotal);
-    void uploadProgress(const qint64 &bytesSent, const qint64 &bytesTotal);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
 
 public slots:
     void abort();
