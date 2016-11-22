@@ -47,6 +47,7 @@ public:
     NetworkResource *head();
     NetworkResource *get();
     NetworkResource *post(const QUrlQuery &formData);
+    NetworkResource *put(const QUrlQuery &formData);
     NetworkResource *deleteResource();
     bool isFinishedWithNoError();
     QByteArray readData();

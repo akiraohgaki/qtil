@@ -129,6 +129,14 @@ NetworkResource *NetworkResource::post(const QUrlQuery &formData)
     return send(async(), "POST", networkRequest, formData);
 }
 
+NetworkResource *NetworkResource::put(const QUrlQuery &formData)
+{
+    QNetworkRequest networkRequest = request();
+    networkRequest.setUrl(url());
+    networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
+    return send(async(), "PUT", networkRequest, formData);
+}
+
 NetworkResource *NetworkResource::deleteResource()
 {
     QNetworkRequest networkRequest = request();
@@ -227,6 +235,10 @@ NetworkResource *NetworkResource::send(bool async, const QString &method, const 
     }
     else if (method == "POST") {
         setReply(manager()->post(request, formData.toString(QUrl::FullyEncoded).toUtf8()));
+        connect(reply(), &QNetworkReply::uploadProgress, this, &NetworkResource::uploadProgress);
+    }
+    else if (method == "PUT") {
+        setReply(manager()->put(request, formData.toString(QUrl::FullyEncoded).toUtf8()));
         connect(reply(), &QNetworkReply::uploadProgress, this, &NetworkResource::uploadProgress);
     }
     else if (method == "DELETE") {
