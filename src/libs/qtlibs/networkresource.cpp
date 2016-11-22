@@ -153,20 +153,21 @@ void NetworkResource::replyFinished()
     if (isFinishedWithNoError()) {
         // Check if redirection
         // Note: An auto redirection option is available since Qt 5.6
-        QString newUrl;
+        QString redirectUrl;
         if (reply()->hasRawHeader("Location")) {
-            newUrl = QString(reply()->rawHeader("Location"));
+            redirectUrl = QString(reply()->rawHeader("Location"));
         }
         else if (reply()->hasRawHeader("Refresh")) {
-            newUrl = QString(reply()->rawHeader("Refresh")).split("url=").last();
+            redirectUrl = QString(reply()->rawHeader("Refresh")).split("url=").last();
         }
-        if (!newUrl.isEmpty()) {
-            if (newUrl.startsWith("/")) {
-                newUrl = reply()->url().authority() + newUrl;
+        if (!redirectUrl.isEmpty()) {
+            QUrl url(redirectUrl);
+            if (url.isRelative()) {
+                url = reply()->url().resolved(url);
             }
             reply()->deleteLater();
             QNetworkRequest networkRequest = request();
-            networkRequest.setUrl(QUrl(newUrl));
+            networkRequest.setUrl(url);
             send(true, method(), networkRequest);
             return;
         }
