@@ -47,7 +47,7 @@ void OcsApi::setBaseUrl(const QUrl &baseUrl)
     baseUrl_ = baseUrl;
 }
 
-QJsonObject OcsApi::fetchConfig()
+QJsonObject OcsApi::getConfig()
 {
     QUrl url = baseUrl().resolved(QUrl("config"));
     url.setQuery("format=json");
@@ -55,7 +55,7 @@ QJsonObject OcsApi::fetchConfig()
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::fetchPersonData(const QUrlQuery &query)
+QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
 {
     QUrl url = baseUrl().resolved(QUrl("person/data"));
     QUrlQuery newQuery(query);
@@ -66,15 +66,15 @@ QJsonObject OcsApi::fetchPersonData(const QUrlQuery &query)
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::fetchPersonDataById(const QString &id)
+QJsonObject OcsApi::getPersonData(const QString &personId)
 {
-    QUrl url = baseUrl().resolved(QUrl("person/data/" + id));
+    QUrl url = baseUrl().resolved(QUrl("person/data/" + personId));
     url.setQuery("format=json");
     qtlibs::NetworkResource resource(url.toString(), url, false);
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::fetchPersonSelf()
+QJsonObject OcsApi::getPersonSelf()
 {
     QUrl url = baseUrl().resolved(QUrl("person/self"));
     url.setQuery("format=json");
@@ -82,7 +82,7 @@ QJsonObject OcsApi::fetchPersonSelf()
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::fetchContentCategories()
+QJsonObject OcsApi::getContentCategories()
 {
     QUrl url = baseUrl().resolved(QUrl("content/categories"));
     url.setQuery("format=json");
@@ -90,7 +90,7 @@ QJsonObject OcsApi::fetchContentCategories()
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::fetchContentData(const QUrlQuery &query)
+QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query)
 {
     QUrl url = baseUrl().resolved(QUrl("content/data"));
     QUrlQuery newQuery(query);
@@ -101,15 +101,15 @@ QJsonObject OcsApi::fetchContentData(const QUrlQuery &query)
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::fetchContentDataById(const QString &id)
+QJsonObject OcsApi::getContentData(const QString &contentId)
 {
-    QUrl url = baseUrl().resolved(QUrl("content/data/" + id));
+    QUrl url = baseUrl().resolved(QUrl("content/data/" + contentId));
     url.setQuery("format=json");
     qtlibs::NetworkResource resource(url.toString(), url, false);
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::fetchContentDownloadById(const QString &contentId, const QString &itemId)
+QJsonObject OcsApi::getContentDownload(const QString &contentId, const QString &itemId)
 {
     QUrl url = baseUrl().resolved(QUrl("content/download/" + contentId + "/" + itemId));
     url.setQuery("format=json");
@@ -117,7 +117,7 @@ QJsonObject OcsApi::fetchContentDownloadById(const QString &contentId, const QSt
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
-QJsonArray OcsApi::fetchProviderFile(const QUrl &url)
+QJsonArray OcsApi::getProviderFile(const QUrl &url)
 {
     QJsonArray providers;
     qtlibs::NetworkResource resource(url.toString(), url, false);

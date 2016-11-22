@@ -32,16 +32,16 @@ public:
     QUrl baseUrl() const;
     void setBaseUrl(const QUrl &baseUrl);
 
-    QJsonObject fetchConfig();
-    QJsonObject fetchPersonData(const QUrlQuery &query = QUrlQuery());
-    QJsonObject fetchPersonDataById(const QString &id);
-    QJsonObject fetchPersonSelf();
-    QJsonObject fetchContentCategories();
-    QJsonObject fetchContentData(const QUrlQuery &query = QUrlQuery());
-    QJsonObject fetchContentDataById(const QString &id);
-    QJsonObject fetchContentDownloadById(const QString &contentId, const QString &itemId);
+    QJsonObject getConfig();
+    QJsonObject getPersonDataSet(const QUrlQuery &query = QUrlQuery());
+    QJsonObject getPersonData(const QString &personId);
+    QJsonObject getPersonSelf();
+    QJsonObject getContentCategories();
+    QJsonObject getContentDataSet(const QUrlQuery &query = QUrlQuery());
+    QJsonObject getContentData(const QString &contentId);
+    QJsonObject getContentDownload(const QString &contentId, const QString &itemId);
 
-    static QJsonArray fetchProviderFile(const QUrl &url);
+    static QJsonArray getProviderFile(const QUrl &url);
 
 private:
     QUrl baseUrl_;
