@@ -24,13 +24,17 @@ class OcsApi : public QObject
     Q_OBJECT
 
 public:
-    explicit OcsApi(const QUrl &baseUrl = QUrl(), QObject *parent = 0);
+    explicit OcsApi(const QUrl &baseUrl = QUrl(), const QString &userName = "", const QString &password = "", QObject *parent = 0);
 
     OcsApi(const OcsApi &other, QObject *parent = 0);
     OcsApi &operator =(const OcsApi &other);
 
     QUrl baseUrl() const;
     void setBaseUrl(const QUrl &baseUrl);
+    QString userName() const;
+    void setUserName(const QString &userName);
+    QString password() const;
+    void setPassword(const QString &password);
 
     QJsonObject getConfig();
     QJsonObject getPersonDataSet(const QUrlQuery &query = QUrlQuery());
@@ -45,6 +49,8 @@ public:
 
 private:
     QUrl baseUrl_;
+    QString userName_;
+    QString password_;
 };
 
 } // namespace qtlibs

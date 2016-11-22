@@ -21,19 +21,23 @@ namespace qtlibs {
 // OCS-API Specification
 // https://www.freedesktop.org/wiki/Specifications/open-collaboration-services/
 
-OcsApi::OcsApi(const QUrl &baseUrl, QObject *parent)
-    : QObject(parent), baseUrl_(baseUrl)
+OcsApi::OcsApi(const QUrl &baseUrl, const QString &userName, const QString &password, QObject *parent)
+    : QObject(parent), baseUrl_(baseUrl), userName_(userName), password_(password)
 {}
 
 OcsApi::OcsApi(const OcsApi &other, QObject *parent)
     : QObject(parent)
 {
     setBaseUrl(other.baseUrl());
+    setUserName(other.userName());
+    setPassword(other.password());
 }
 
 OcsApi &OcsApi::operator =(const OcsApi &other)
 {
     setBaseUrl(other.baseUrl());
+    setUserName(other.userName());
+    setPassword(other.password());
     return *this;
 }
 
@@ -47,6 +51,26 @@ void OcsApi::setBaseUrl(const QUrl &baseUrl)
     baseUrl_ = baseUrl;
 }
 
+QString OcsApi::userName() const
+{
+    return userName_;
+}
+
+void OcsApi::setUserName(const QString &userName)
+{
+    userName_ = userName;
+}
+
+QString OcsApi::password() const
+{
+    return password_;
+}
+
+void OcsApi::setPassword(const QString &password)
+{
+    password_ = password;
+}
+
 QJsonObject OcsApi::getConfig()
 {
     QUrl url = baseUrl().resolved(QUrl("config"));
@@ -58,6 +82,8 @@ QJsonObject OcsApi::getConfig()
 QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
 {
     QUrl url = baseUrl().resolved(QUrl("person/data"));
+    url.setUserName(userName());
+    url.setPassword(password());
     QUrlQuery newQuery(query);
     newQuery.removeQueryItem("format");
     newQuery.addQueryItem("format", "json");
@@ -69,6 +95,8 @@ QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
 QJsonObject OcsApi::getPersonData(const QString &personId)
 {
     QUrl url = baseUrl().resolved(QUrl("person/data/" + personId));
+    url.setUserName(userName());
+    url.setPassword(password());
     url.setQuery("format=json");
     qtlibs::NetworkResource resource(url.toString(), url, false);
     return qtlibs::Json(resource.get()->readData()).toObject();
@@ -77,6 +105,8 @@ QJsonObject OcsApi::getPersonData(const QString &personId)
 QJsonObject OcsApi::getPersonSelf()
 {
     QUrl url = baseUrl().resolved(QUrl("person/self"));
+    url.setUserName(userName());
+    url.setPassword(password());
     url.setQuery("format=json");
     qtlibs::NetworkResource resource(url.toString(), url, false);
     return qtlibs::Json(resource.get()->readData()).toObject();
