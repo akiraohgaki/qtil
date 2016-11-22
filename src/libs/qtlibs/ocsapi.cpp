@@ -111,7 +111,7 @@ QJsonObject OcsApi::fetchContentDataById(const QString &id)
 
 QJsonObject OcsApi::fetchContentDownloadById(const QString &contentId, const QString &itemId)
 {
-    QUrl url = baseUrl().resolved(QUrl("content/data/" + contentId + "/" + itemId));
+    QUrl url = baseUrl().resolved(QUrl("content/download/" + contentId + "/" + itemId));
     url.setQuery("format=json");
     qtlibs::NetworkResource resource(url.toString(), url, false);
     return qtlibs::Json(resource.get()->readData()).toObject();
