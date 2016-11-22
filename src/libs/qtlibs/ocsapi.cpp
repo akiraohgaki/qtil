@@ -60,9 +60,10 @@ QJsonObject OcsApi::fetchContentCategories()
 QJsonObject OcsApi::fetchContentData(const QUrlQuery &query)
 {
     QUrl url = baseUrl().resolved(QUrl("content/data"));
-    query.removeQueryItem("format");
-    query.addQueryItem("format", "json");
-    url.setQuery(query);
+    QUrlQuery newQuery(query);
+    newQuery.removeQueryItem("format");
+    newQuery.addQueryItem("format", "json");
+    url.setQuery(newQuery);
     qtlibs::NetworkResource resource(url.toString(), url, false);
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
