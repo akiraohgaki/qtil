@@ -34,6 +34,7 @@ public:
 
     QJsonObject fetchConfig();
     QJsonObject fetchPersonData(const QUrlQuery &query = QUrlQuery());
+    QJsonObject fetchPersonDataById(const QString &id);
     QJsonObject fetchContentCategories();
     QJsonObject fetchContentData(const QUrlQuery &query = QUrlQuery());
     QJsonObject fetchContentDataById(const QString &id);
