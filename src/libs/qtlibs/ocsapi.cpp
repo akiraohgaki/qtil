@@ -47,6 +47,14 @@ void OcsApi::setBaseUrl(const QUrl &baseUrl)
     baseUrl_ = baseUrl;
 }
 
+QJsonObject OcsApi::fetchConfig()
+{
+    QUrl url = baseUrl().resolved(QUrl("config"));
+    url.setQuery("format=json");
+    qtlibs::NetworkResource resource(url.toString(), url, false);
+    return qtlibs::Json(resource.get()->readData()).toObject();
+}
+
 QJsonObject OcsApi::fetchContentCategories()
 {
     QUrl url = baseUrl().resolved(QUrl("content/categories"));
