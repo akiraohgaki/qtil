@@ -32,6 +32,7 @@ public:
     void setBaseUrl(const QUrl &baseUrl);
 
     QJsonObject fetchContentCategories();
+    QJsonObject fetchContentDataById(const QString &id);
 
     static QJsonArray fetchProvidersFile(const QUrl &url);
 
