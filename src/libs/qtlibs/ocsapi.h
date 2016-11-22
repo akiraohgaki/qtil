@@ -39,6 +39,7 @@ public:
     QJsonObject fetchContentCategories();
     QJsonObject fetchContentData(const QUrlQuery &query = QUrlQuery());
     QJsonObject fetchContentDataById(const QString &id);
+    QJsonObject fetchContentDownloadById(const QString &contentId, const QString &itemId);
 
     static QJsonArray fetchProviderFile(const QUrl &url);
 

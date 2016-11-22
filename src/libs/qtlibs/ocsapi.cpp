@@ -109,6 +109,14 @@ QJsonObject OcsApi::fetchContentDataById(const QString &id)
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
+QJsonObject OcsApi::fetchContentDownloadById(const QString &contentId, const QString &itemId)
+{
+    QUrl url = baseUrl().resolved(QUrl("content/data/" + contentId + "/" + itemId));
+    url.setQuery("format=json");
+    qtlibs::NetworkResource resource(url.toString(), url, false);
+    return qtlibs::Json(resource.get()->readData()).toObject();
+}
+
 QJsonArray OcsApi::fetchProviderFile(const QUrl &url)
 {
     QJsonArray providers;
