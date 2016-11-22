@@ -33,6 +33,7 @@ public:
     void setBaseUrl(const QUrl &baseUrl);
 
     QJsonObject fetchConfig();
+    QJsonObject fetchPersonData(const QUrlQuery &query = QUrlQuery());
     QJsonObject fetchContentCategories();
     QJsonObject fetchContentData(const QUrlQuery &query = QUrlQuery());
     QJsonObject fetchContentDataById(const QString &id);
