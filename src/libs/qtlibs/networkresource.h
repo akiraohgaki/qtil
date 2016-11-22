@@ -13,6 +13,7 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QUrlQuery>
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -41,9 +42,11 @@ public:
     QNetworkAccessManager *manager() const;
     QNetworkReply *reply() const;
     QString method() const;
+    QUrlQuery formData() const;
 
     NetworkResource *head();
     NetworkResource *get();
+    NetworkResource *post(const QUrlQuery &formData);
     NetworkResource *deleteResource();
     bool isFinishedWithNoError();
     QByteArray readData();
@@ -52,6 +55,7 @@ public:
 signals:
     void finished(NetworkResource *resource);
     void downloadProgress(const qint64 &bytesReceived, const qint64 &bytesTotal);
+    void uploadProgress(const qint64 &bytesSent, const qint64 &bytesTotal);
 
 public slots:
     void abort();
@@ -63,8 +67,9 @@ private:
     void setManager(QNetworkAccessManager *manager);
     void setReply(QNetworkReply *reply);
     void setMethod(const QString &method);
+    void setFormData(const QUrlQuery &formData);
 
-    NetworkResource *send(bool async, const QString &method, const QNetworkRequest &request);
+    NetworkResource *send(bool async, const QString &method, const QNetworkRequest &request, const QUrlQuery &formData = QUrlQuery());
 
     QString name_;
     QUrl url_;
@@ -73,6 +78,7 @@ private:
     QNetworkAccessManager *manager_;
     QNetworkReply *reply_;
     QString method_;
+    QUrlQuery formData_;
 };
 
 } // namespace qtlibs
