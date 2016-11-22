@@ -36,7 +36,7 @@ public:
     QJsonObject fetchContentData(const QUrlQuery &query = QUrlQuery());
     QJsonObject fetchContentDataById(const QString &id);
 
-    static QJsonArray fetchProvidersFile(const QUrl &url);
+    static QJsonArray fetchProviderFile(const QUrl &url);
 
 private:
     QUrl baseUrl_;
