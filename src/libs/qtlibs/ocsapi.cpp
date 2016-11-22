@@ -57,6 +57,16 @@ QJsonObject OcsApi::fetchContentCategories()
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
+QJsonObject OcsApi::fetchContentData(const QUrlQuery &query)
+{
+    QUrl url = baseUrl().resolved(QUrl("content/data"));
+    query.removeQueryItem("format");
+    query.addQueryItem("format", "json");
+    url.setQuery(query);
+    qtlibs::NetworkResource resource(url.toString(), url, false);
+    return qtlibs::Json(resource.get()->readData()).toObject();
+}
+
 QJsonObject OcsApi::fetchContentDataById(const QString &id)
 {
     QUrl url = baseUrl().resolved(QUrl("content/data/" + id));

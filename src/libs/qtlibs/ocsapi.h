@@ -13,6 +13,7 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QUrlQuery>
 #include <QJsonObject>
 #include <QJsonArray>
 
@@ -32,6 +33,7 @@ public:
     void setBaseUrl(const QUrl &baseUrl);
 
     QJsonObject fetchContentCategories();
+    QJsonObject fetchContentData(const QUrlQuery &query = QUrlQuery());
     QJsonObject fetchContentDataById(const QString &id);
 
     static QJsonArray fetchProvidersFile(const QUrl &url);
