@@ -18,10 +18,8 @@
 
 namespace qtlibs {
 
-/**
- * OCS-API Specification
- * http://www.freedesktop.org/wiki/Specifications/open-collaboration-services/
- */
+// OCS-API Specification
+// http://www.freedesktop.org/wiki/Specifications/open-collaboration-services/
 
 OcsApi::OcsApi(const QUrl &baseUrl, QObject *parent)
     : QObject(parent), baseUrl_(baseUrl)
@@ -79,13 +77,10 @@ QJsonObject OcsApi::fetchContentDataById(const QString &id)
 QJsonArray OcsApi::fetchProvidersFile(const QUrl &url)
 {
     QJsonArray providers;
-
     qtlibs::NetworkResource resource(url.toString(), url, false);
     QXmlStreamReader reader(resource.get()->readData());
-
     QStringList whitelist;
     whitelist << "id" << "location" << "name" << "icon" << "termsofuse" << "register";
-
     while (!reader.atEnd() && !reader.hasError()) {
         reader.readNext();
         if (reader.isStartElement() && reader.name() == "provider") {
@@ -102,7 +97,6 @@ QJsonArray OcsApi::fetchProvidersFile(const QUrl &url)
             providers[i] = provider;
         }
     }
-
     return providers;
 }
 
