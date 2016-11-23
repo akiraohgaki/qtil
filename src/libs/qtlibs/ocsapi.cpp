@@ -181,7 +181,7 @@ QJsonArray OcsApi::getProviderFile(const QUrl &url)
         reader.readNext();
         if (reader.isStartElement() && reader.name() == "provider") {
             QJsonObject provider;
-            provider["_providers_file"] = url.toString();
+            provider["_providerfile"] = url.toString();
             providers.append(provider);
             continue;
         }
