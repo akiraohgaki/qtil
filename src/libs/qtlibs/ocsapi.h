@@ -37,6 +37,7 @@ public:
     void setPassword(const QString &password);
 
     QJsonObject getConfig();
+    QJsonObject checkPerson();
     QJsonObject getPersonDataSet(const QUrlQuery &query = QUrlQuery());
     QJsonObject getPersonData(const QString &personId);
     QJsonObject getPersonSelf();

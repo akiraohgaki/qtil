@@ -79,6 +79,17 @@ QJsonObject OcsApi::getConfig()
     return qtlibs::Json(resource.get()->readData()).toObject();
 }
 
+QJsonObject OcsApi::checkPerson()
+{
+    QUrl url = baseUrl().resolved(QUrl("person/check"));
+    QUrlQuery formData;
+    formData.addQueryItem("login", userName());
+    formData.addQueryItem("password", password());
+    formData.addQueryItem("format", "json");
+    qtlibs::NetworkResource resource(url.toString(), url, false);
+    return qtlibs::Json(resource.post(formData)->readData()).toObject();
+}
+
 QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
 {
     QUrl url = baseUrl().resolved(QUrl("person/data"));
