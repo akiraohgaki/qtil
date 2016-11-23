@@ -70,7 +70,7 @@ private:
     void setMethod(const QString &method);
     void setFormData(const QUrlQuery &formData);
 
-    NetworkResource *send(bool async, const QString &method, const QNetworkRequest &request, const QUrlQuery &formData = QUrlQuery());
+    NetworkResource *send(const QUrl &url, bool async);
 
     QString id_;
     QUrl url_;

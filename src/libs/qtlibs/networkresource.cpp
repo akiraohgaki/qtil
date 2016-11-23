@@ -109,39 +109,34 @@ QUrlQuery NetworkResource::formData() const
 
 NetworkResource *NetworkResource::head()
 {
-    QNetworkRequest networkRequest = request();
-    networkRequest.setUrl(url());
-    return send(async(), "HEAD", networkRequest);
+    setMethod("HEAD");
+    return send(url(), async());
 }
 
 NetworkResource *NetworkResource::get()
 {
-    QNetworkRequest networkRequest = request();
-    networkRequest.setUrl(url());
-    return send(async(), "GET", networkRequest);
+    setMethod("GET");
+    return send(url(), async());
 }
 
 NetworkResource *NetworkResource::post(const QUrlQuery &formData)
 {
-    QNetworkRequest networkRequest = request();
-    networkRequest.setUrl(url());
-    networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
-    return send(async(), "POST", networkRequest, formData);
+    setMethod("POST");
+    setFormData(formData);
+    return send(url(), async());
 }
 
 NetworkResource *NetworkResource::put(const QUrlQuery &formData)
 {
-    QNetworkRequest networkRequest = request();
-    networkRequest.setUrl(url());
-    networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
-    return send(async(), "PUT", networkRequest, formData);
+    setMethod("PUT");
+    setFormData(formData);
+    return send(url(), async());
 }
 
 NetworkResource *NetworkResource::deleteResource()
 {
-    QNetworkRequest networkRequest = request();
-    networkRequest.setUrl(url());
-    return send(async(), "DELETE", networkRequest);
+    setMethod("DELETE");
+    return send(url(), async());
 }
 
 bool NetworkResource::isFinishedWithNoError()
@@ -192,10 +187,8 @@ void NetworkResource::replyFinished()
             if (redirectUrl.isRelative()) {
                 redirectUrl = reply()->url().resolved(redirectUrl);
             }
-            QNetworkRequest networkRequest = reply()->request();
-            networkRequest.setUrl(redirectUrl);
             reply()->deleteLater();
-            send(true, method(), networkRequest, formData());
+            send(redirectUrl, true);
             return;
         }
     }
@@ -222,32 +215,33 @@ void NetworkResource::setFormData(const QUrlQuery &formData)
     formData_ = formData;
 }
 
-NetworkResource *NetworkResource::send(bool async, const QString &method, const QNetworkRequest &request, const QUrlQuery &formData)
+NetworkResource *NetworkResource::send(const QUrl &url, bool async)
 {
-    setMethod(method);
-    setFormData(formData);
-    if (method == "HEAD") {
-        setReply(manager()->head(request));
+    QNetworkRequest networkRequest = request();
+    networkRequest.setUrl(url);
+    if (method() == "HEAD") {
+        setReply(manager()->head(networkRequest));
     }
-    else if (method == "GET") {
-        setReply(manager()->get(request));
-        connect(reply(), &QNetworkReply::downloadProgress, this, &NetworkResource::downloadProgress);
+    else if (method() == "GET") {
+        setReply(manager()->get(networkRequest));
     }
-    else if (method == "POST") {
-        setReply(manager()->post(request, formData.toString(QUrl::FullyEncoded).toUtf8()));
-        connect(reply(), &QNetworkReply::uploadProgress, this, &NetworkResource::uploadProgress);
+    else if (method() == "POST") {
+        networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
+        setReply(manager()->post(networkRequest, formData().toString(QUrl::FullyEncoded).toUtf8()));
     }
-    else if (method == "PUT") {
-        setReply(manager()->put(request, formData.toString(QUrl::FullyEncoded).toUtf8()));
-        connect(reply(), &QNetworkReply::uploadProgress, this, &NetworkResource::uploadProgress);
+    else if (method() == "PUT") {
+        networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
+        setReply(manager()->put(networkRequest, formData().toString(QUrl::FullyEncoded).toUtf8()));
     }
-    else if (method == "DELETE") {
-        setReply(manager()->deleteResource(request));
+    else if (method() == "DELETE") {
+        setReply(manager()->deleteResource(networkRequest));
     }
     else {
         Q_ASSERT(false);
     }
     connect(reply(), &QNetworkReply::finished, this, &NetworkResource::replyFinished);
+    connect(reply(), &QNetworkReply::downloadProgress, this, &NetworkResource::downloadProgress);
+    connect(reply(), &QNetworkReply::uploadProgress, this, &NetworkResource::uploadProgress);
     if (!async) {
         QEventLoop eventLoop;
         connect(this, &NetworkResource::finished, &eventLoop, &QEventLoop::quit);
