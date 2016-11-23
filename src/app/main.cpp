@@ -26,7 +26,7 @@ public:
                     this);
         QJsonObject result = qtlibs::Json(resource->get()->readData()).toObject();
 
-        qDebug() << resource->name() << ":" << result["name"].toString();
+        qDebug() << resource->id() << ":" << result["name"].toString();
 
         resource->setUrl(QUrl(result["text"].toArray()[0].toObject()["url"].toString()));
         resource->setAsync(true);
@@ -40,7 +40,7 @@ public slots:
         resource->saveData(path);
         resource->deleteLater();
 
-        qDebug() << "Downloaded :" << path;
+        qDebug() << "Downloaded" << resource->id() << ":" << path;
         qDebug() << "Finished";
 
         QCoreApplication::exit();

@@ -25,14 +25,14 @@ class NetworkResource : public QObject
     Q_OBJECT
 
 public:
-    explicit NetworkResource(const QString &name = "", const QUrl &url = QUrl(), bool async = true, QObject *parent = 0);
+    explicit NetworkResource(const QString &id = "", const QUrl &url = QUrl(), bool async = true, QObject *parent = 0);
     ~NetworkResource();
 
     NetworkResource(const NetworkResource &other, QObject *parent = 0);
     NetworkResource &operator =(const NetworkResource &other);
 
-    QString name() const;
-    void setName(const QString &name);
+    QString id() const;
+    void setId(const QString &id);
     QUrl url() const;
     void setUrl(const QUrl &url);
     bool async() const;
@@ -72,7 +72,7 @@ private:
 
     NetworkResource *send(bool async, const QString &method, const QNetworkRequest &request, const QUrlQuery &formData = QUrlQuery());
 
-    QString name_;
+    QString id_;
     QUrl url_;
     bool async_;
     QNetworkRequest request_;
