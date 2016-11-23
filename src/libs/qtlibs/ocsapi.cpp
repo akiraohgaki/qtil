@@ -21,13 +21,14 @@ namespace qtlibs {
 // OCS-API Specification
 // https://www.freedesktop.org/wiki/Specifications/open-collaboration-services/
 
-OcsApi::OcsApi(const QUrl &baseUrl, const QString &userName, const QString &password, QObject *parent)
-    : QObject(parent), baseUrl_(baseUrl), userName_(userName), password_(password)
+OcsApi::OcsApi(const QString &id, const QUrl &baseUrl, const QString &userName, const QString &password, QObject *parent)
+    : QObject(parent), id_(id), baseUrl_(baseUrl), userName_(userName), password_(password)
 {}
 
 OcsApi::OcsApi(const OcsApi &other, QObject *parent)
     : QObject(parent)
 {
+    setId(other.id());
     setBaseUrl(other.baseUrl());
     setUserName(other.userName());
     setPassword(other.password());
@@ -35,10 +36,21 @@ OcsApi::OcsApi(const OcsApi &other, QObject *parent)
 
 OcsApi &OcsApi::operator =(const OcsApi &other)
 {
+    setId(other.id());
     setBaseUrl(other.baseUrl());
     setUserName(other.userName());
     setPassword(other.password());
     return *this;
+}
+
+QString OcsApi::id() const
+{
+    return id_;
+}
+
+void OcsApi::setId(const QString &id)
+{
+    id_ = id;
 }
 
 QUrl OcsApi::baseUrl() const

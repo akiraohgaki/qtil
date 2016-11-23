@@ -24,11 +24,13 @@ class OcsApi : public QObject
     Q_OBJECT
 
 public:
-    explicit OcsApi(const QUrl &baseUrl = QUrl(), const QString &userName = "", const QString &password = "", QObject *parent = 0);
+    explicit OcsApi(const QString &id = "", const QUrl &baseUrl = QUrl(), const QString &userName = "", const QString &password = "", QObject *parent = 0);
 
     OcsApi(const OcsApi &other, QObject *parent = 0);
     OcsApi &operator =(const OcsApi &other);
 
+    QString id() const;
+    void setId(const QString &id);
     QUrl baseUrl() const;
     void setBaseUrl(const QUrl &baseUrl);
     QString userName() const;
@@ -49,6 +51,7 @@ public:
     static QJsonArray getProviderFile(const QUrl &url);
 
 private:
+    QString id_;
     QUrl baseUrl_;
     QString userName_;
     QString password_;
