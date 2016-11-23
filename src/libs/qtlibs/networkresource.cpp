@@ -102,9 +102,14 @@ QString NetworkResource::method() const
     return method_;
 }
 
-QUrlQuery NetworkResource::formData() const
+QString NetworkResource::contentType() const
 {
-    return formData_;
+    return contentType_;
+}
+
+QByteArray NetworkResource::contentData() const
+{
+    return contentData_;
 }
 
 NetworkResource *NetworkResource::head()
@@ -119,17 +124,35 @@ NetworkResource *NetworkResource::get()
     return send(url(), async());
 }
 
-NetworkResource *NetworkResource::post(const QUrlQuery &formData)
+NetworkResource *NetworkResource::post(const QByteArray &contentData, const QString &contentType)
 {
     setMethod("POST");
-    setFormData(formData);
+    setContentType(contentType);
+    setContentData(contentData);
     return send(url(), async());
 }
 
-NetworkResource *NetworkResource::put(const QUrlQuery &formData)
+NetworkResource *NetworkResource::post(const QUrlQuery &contentData)
+{
+    setMethod("POST");
+    setContentType("application/x-www-form-urlencoded");
+    setContentData(contentData.toString(QUrl::FullyEncoded).toUtf8());
+    return send(url(), async());
+}
+
+NetworkResource *NetworkResource::put(const QByteArray &contentData, const QString &contentType)
 {
     setMethod("PUT");
-    setFormData(formData);
+    setContentType(contentType);
+    setContentData(contentData);
+    return send(url(), async());
+}
+
+NetworkResource *NetworkResource::put(const QUrlQuery &contentData)
+{
+    setMethod("PUT");
+    setContentType("application/x-www-form-urlencoded");
+    setContentData(contentData.toString(QUrl::FullyEncoded).toUtf8());
     return send(url(), async());
 }
 
@@ -210,9 +233,14 @@ void NetworkResource::setMethod(const QString &method)
     method_ = method;
 }
 
-void NetworkResource::setFormData(const QUrlQuery &formData)
+void NetworkResource::setContentType(const QString &contentType)
 {
-    formData_ = formData;
+    contentType_ = contentType;
+}
+
+void NetworkResource::setContentData(const QByteArray &contentData)
+{
+    contentData_ = contentData;
 }
 
 NetworkResource *NetworkResource::send(const QUrl &url, bool async)
@@ -226,12 +254,12 @@ NetworkResource *NetworkResource::send(const QUrl &url, bool async)
         setReply(manager()->get(networkRequest));
     }
     else if (method() == "POST") {
-        networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
-        setReply(manager()->post(networkRequest, formData().toString(QUrl::FullyEncoded).toUtf8()));
+        networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(contentType()));
+        setReply(manager()->post(networkRequest, contentData()));
     }
     else if (method() == "PUT") {
-        networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
-        setReply(manager()->put(networkRequest, formData().toString(QUrl::FullyEncoded).toUtf8()));
+        networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(contentType()));
+        setReply(manager()->put(networkRequest, contentData()));
     }
     else if (method() == "DELETE") {
         setReply(manager()->deleteResource(networkRequest));

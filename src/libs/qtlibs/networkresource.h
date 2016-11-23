@@ -42,12 +42,15 @@ public:
     QNetworkAccessManager *manager() const;
     QNetworkReply *reply() const;
     QString method() const;
-    QUrlQuery formData() const;
+    QString contentType() const;
+    QByteArray contentData() const;
 
     NetworkResource *head();
     NetworkResource *get();
-    NetworkResource *post(const QUrlQuery &formData);
-    NetworkResource *put(const QUrlQuery &formData);
+    NetworkResource *post(const QByteArray &contentData, const QString &contentType);
+    NetworkResource *post(const QUrlQuery &contentData);
+    NetworkResource *put(const QByteArray &contentData, const QString &contentType);
+    NetworkResource *put(const QUrlQuery &contentData);
     NetworkResource *deleteResource();
     bool isFinishedWithNoError();
     QByteArray readData();
@@ -68,7 +71,8 @@ private:
     void setManager(QNetworkAccessManager *manager);
     void setReply(QNetworkReply *reply);
     void setMethod(const QString &method);
-    void setFormData(const QUrlQuery &formData);
+    void setContentType(const QString &contentType);
+    void setContentData(const QByteArray &contentData);
 
     NetworkResource *send(const QUrl &url, bool async);
 
@@ -79,7 +83,8 @@ private:
     QNetworkAccessManager *manager_;
     QNetworkReply *reply_;
     QString method_;
-    QUrlQuery formData_;
+    QString contentType_;
+    QByteArray contentData_;
 };
 
 } // namespace qtlibs
