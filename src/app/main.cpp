@@ -2,13 +2,13 @@
 #include <QCoreApplication>
 #include <QDebug>
 
-#include "qtlibs/file.h"
-#include "qtlibs/dir.h"
-#include "qtlibs/json.h"
-#include "qtlibs/config.h"
-#include "qtlibs/networkresource.h"
-#include "qtlibs/ocsapi.h"
-#include "qtlibs/package.h"
+#include "qtlib_file.h"
+#include "qtlib_dir.h"
+#include "qtlib_json.h"
+#include "qtlib_config.h"
+#include "qtlib_networkresource.h"
+#include "qtlib_ocsapi.h"
+#include "qtlib_package.h"
 
 class Test : public QObject
 {
@@ -19,24 +19,24 @@ public:
     void start() {
         qDebug() << "Start";
 
-        qtlibs::NetworkResource *resource = new qtlibs::NetworkResource(
+        qtlib::NetworkResource *resource = new qtlib::NetworkResource(
                     "LGPL-3.0",
                     QUrl("https://api.opensource.org/license/LGPL-3.0"),
                     false,
                     this);
-        QJsonObject result = qtlibs::Json(resource->get()->readData()).toObject();
+        QJsonObject result = qtlib::Json(resource->get()->readData()).toObject();
 
         qDebug() << resource->id() << ":" << result["name"].toString();
 
         resource->setUrl(QUrl(result["text"].toArray()[0].toObject()["url"].toString()));
         resource->setAsync(true);
-        connect(resource, &qtlibs::NetworkResource::finished, this, &Test::finished);
+        connect(resource, &qtlib::NetworkResource::finished, this, &Test::finished);
         resource->get();
     }
 
 public slots:
-    void finished(qtlibs::NetworkResource *resource) {
-        QString path = qtlibs::Dir::tempPath() + "/" + resource->url().fileName();
+    void finished(qtlib::NetworkResource *resource) {
+        QString path = qtlib::Dir::tempPath() + "/" + resource->url().fileName();
         resource->saveData(path);
         resource->deleteLater();
 
