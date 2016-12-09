@@ -84,8 +84,7 @@ bool Package::installAsArchive(const QString &destinationDirPath)
     archiveTypes["application/x-rar"] = QString("rar");
     archiveTypes["application/x-rar-compressed"] = QString("rar");
 
-    QMimeDatabase mimeDb;
-    QString mimeType = mimeDb.mimeTypeForFile(path()).name();
+    QString mimeType = QMimeDatabase().mimeTypeForFile(path()).name();
 
     if (archiveTypes.contains(mimeType)) {
         QString archiveType = archiveTypes[mimeType].toString();

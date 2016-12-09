@@ -43,8 +43,7 @@ void File::setPath(const QString &path)
 
 bool File::exists()
 {
-    QFile file(path());
-    return file.exists();
+    return QFile(path()).exists();
 }
 
 QByteArray File::readData()
@@ -97,20 +96,17 @@ bool File::writeText(const QString &data)
 
 bool File::copy(const QString &newPath)
 {
-    QFile file(path());
-    return file.copy(newPath);
+    return QFile(path()).copy(newPath);
 }
 
 bool File::move(const QString &newPath)
 {
-    QFile file(path());
-    return file.rename(newPath);
+    return QFile(path()).rename(newPath);
 }
 
 bool File::remove()
 {
-    QFile file(path());
-    return file.remove();
+    return QFile(path()).remove();
 }
 
 } // namespace qtlib

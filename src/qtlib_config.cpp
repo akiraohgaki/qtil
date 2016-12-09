@@ -56,10 +56,7 @@ bool Config::set(const QString &name, const QJsonObject &object)
     QString configFilePath = configDirPath() + "/" + name + ".json";
     QByteArray json = qtlib::Json(object).toJson();
     qtlib::Dir(configDirPath()).make();
-    if (qtlib::File(configFilePath).writeData(json)) {
-        return true;
-    }
-    return false;
+    return qtlib::File(configFilePath).writeData(json);
 }
 
 } // namespace qtlib

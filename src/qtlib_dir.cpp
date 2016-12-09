@@ -44,8 +44,7 @@ void Dir::setPath(const QString &path)
 
 bool Dir::exists()
 {
-    QDir dir(path());
-    return dir.exists();
+    return QDir(path()).exists();
 }
 
 QFileInfoList Dir::list()
@@ -74,15 +73,13 @@ bool Dir::copy(const QString &newPath)
 
 bool Dir::move(const QString &newPath)
 {
-    QDir dir(path());
-    return dir.rename(path(), newPath);
+    return QDir(path()).rename(path(), newPath);
 }
 
 bool Dir::remove()
 {
     // This function will remove files recursively
-    QDir dir(path());
-    return dir.removeRecursively();
+    return QDir(path()).removeRecursively();
 }
 
 QString Dir::rootPath()
@@ -132,10 +129,7 @@ bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
 {
     QFileInfo fileInfo(srcPath);
     if (fileInfo.isFile()) {
-        QFile file(srcPath);
-        if (file.copy(newPath)) {
-            return true;
-        }
+        return QFile(srcPath).copy(newPath);
     }
     else if (fileInfo.isDir()) {
         QDir newDir(newPath);
