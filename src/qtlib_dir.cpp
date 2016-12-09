@@ -128,7 +128,11 @@ QString Dir::kdehomePath()
 bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
 {
     QFileInfo fileInfo(srcPath);
-    if (fileInfo.isFile()) {
+    if (fileInfo.isSymLink() && !fileInfo.exists()) {
+        // Ignore broken symlink
+        return true;
+    }
+    else if (fileInfo.isFile()) {
         return QFile(srcPath).copy(newPath);
     }
     else if (fileInfo.isDir()) {
