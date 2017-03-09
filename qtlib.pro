@@ -1,3 +1,3 @@
-include(qtlib.pri)
+include($${PWD}/qtlib.pri)
 
-DISTFILES += README.md
+DISTFILES += $${PWD}/README.md
