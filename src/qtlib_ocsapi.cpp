@@ -83,7 +83,7 @@ void OcsApi::setPassword(const QString &password)
 
 QJsonObject OcsApi::getConfig()
 {
-    QUrl url = baseUrl().resolved(QUrl("config"));
+    auto url = baseUrl().resolved(QUrl("config"));
     url.setQuery("format=json");
     qtlib::NetworkResource resource(url.toString(), url, false);
     return qtlib::Json(resource.get()->readData()).toObject();
@@ -91,7 +91,7 @@ QJsonObject OcsApi::getConfig()
 
 QJsonObject OcsApi::checkPerson()
 {
-    QUrl url = baseUrl().resolved(QUrl("person/check"));
+    auto url = baseUrl().resolved(QUrl("person/check"));
     QUrlQuery formData;
     formData.addQueryItem("login", userName());
     formData.addQueryItem("password", password());
@@ -102,7 +102,7 @@ QJsonObject OcsApi::checkPerson()
 
 QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
 {
-    QUrl url = baseUrl().resolved(QUrl("person/data"));
+    auto url = baseUrl().resolved(QUrl("person/data"));
     url.setUserName(userName());
     url.setPassword(password());
     QUrlQuery newQuery(query);
@@ -115,7 +115,7 @@ QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
 
 QJsonObject OcsApi::getPersonData(const QString &personId)
 {
-    QUrl url = baseUrl().resolved(QUrl("person/data/" + personId));
+    auto url = baseUrl().resolved(QUrl("person/data/" + personId));
     url.setUserName(userName());
     url.setPassword(password());
     url.setQuery("format=json");
@@ -125,7 +125,7 @@ QJsonObject OcsApi::getPersonData(const QString &personId)
 
 QJsonObject OcsApi::getPersonSelf()
 {
-    QUrl url = baseUrl().resolved(QUrl("person/self"));
+    auto url = baseUrl().resolved(QUrl("person/self"));
     url.setUserName(userName());
     url.setPassword(password());
     url.setQuery("format=json");
@@ -135,7 +135,7 @@ QJsonObject OcsApi::getPersonSelf()
 
 QJsonObject OcsApi::getContentCategories()
 {
-    QUrl url = baseUrl().resolved(QUrl("content/categories"));
+    auto url = baseUrl().resolved(QUrl("content/categories"));
     url.setQuery("format=json");
     qtlib::NetworkResource resource(url.toString(), url, false);
     return qtlib::Json(resource.get()->readData()).toObject();
@@ -143,7 +143,7 @@ QJsonObject OcsApi::getContentCategories()
 
 QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query)
 {
-    QUrl url = baseUrl().resolved(QUrl("content/data"));
+    auto url = baseUrl().resolved(QUrl("content/data"));
     QUrlQuery newQuery(query);
     newQuery.removeQueryItem("format");
     newQuery.addQueryItem("format", "json");
@@ -154,7 +154,7 @@ QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query)
 
 QJsonObject OcsApi::getContentData(const QString &contentId)
 {
-    QUrl url = baseUrl().resolved(QUrl("content/data/" + contentId));
+    auto url = baseUrl().resolved(QUrl("content/data/" + contentId));
     url.setQuery("format=json");
     qtlib::NetworkResource resource(url.toString(), url, false);
     return qtlib::Json(resource.get()->readData()).toObject();
@@ -162,7 +162,7 @@ QJsonObject OcsApi::getContentData(const QString &contentId)
 
 QJsonObject OcsApi::getContentDownload(const QString &contentId, const QString &itemId)
 {
-    QUrl url = baseUrl().resolved(QUrl("content/download/" + contentId + "/" + itemId));
+    auto url = baseUrl().resolved(QUrl("content/download/" + contentId + "/" + itemId));
     url.setQuery("format=json");
     qtlib::NetworkResource resource(url.toString(), url, false);
     return qtlib::Json(resource.get()->readData()).toObject();
@@ -173,8 +173,7 @@ QJsonArray OcsApi::getProviderFile(const QUrl &url)
     QJsonArray providers;
     qtlib::NetworkResource resource(url.toString(), url, false);
     QXmlStreamReader reader(resource.get()->readData());
-    QStringList whitelist;
-    whitelist << "id" << "location" << "name" << "icon" << "termsofuse" << "register";
+    QStringList whitelist{"id", "location", "name", "icon", "termsofuse", "register"};
     while (!reader.atEnd() && !reader.hasError()) {
         reader.readNext();
         if (reader.isStartElement() && reader.name() == "provider") {
@@ -183,10 +182,10 @@ QJsonArray OcsApi::getProviderFile(const QUrl &url)
             providers.append(provider);
             continue;
         }
-        QString elementName = reader.name().toString();
+        auto elementName = reader.name().toString();
         if (!providers.isEmpty() && whitelist.contains(elementName)) {
             int i(providers.size() - 1);
-            QJsonObject provider = providers[i].toObject();
+            auto provider = providers[i].toObject();
             provider[elementName] = reader.readElementText();
             providers[i] = provider;
         }

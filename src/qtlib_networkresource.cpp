@@ -253,7 +253,7 @@ void NetworkResource::setContentData(const QByteArray &contentData)
 
 NetworkResource *NetworkResource::send(const QUrl &url, bool async)
 {
-    QNetworkRequest networkRequest = request();
+    auto networkRequest = request();
     networkRequest.setUrl(url);
     if (method() == "HEAD") {
         setReply(manager()->head(networkRequest));

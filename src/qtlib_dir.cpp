@@ -118,7 +118,7 @@ QString Dir::kdehomePath()
     // https://userbase.kde.org/KDE_System_Administration/Environment_Variables
 
     // KDE 4 maybe uses $KDEHOME
-    QString kdehomePath = QString::fromLocal8Bit(qgetenv("KDEHOME").constData());
+    auto kdehomePath = QString::fromLocal8Bit(qgetenv("KDEHOME").constData());
     if (kdehomePath.isEmpty()) {
         kdehomePath = homePath() + "/.kde";
     }
@@ -137,13 +137,12 @@ bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
     }
     else if (fileInfo.isDir()) {
         QDir newDir(newPath);
-        QString newDirName = newDir.dirName();
+        auto newDirName = newDir.dirName();
         newDir.cdUp();
         if (newDir.mkdir(newDirName)) {
             QDir dir(srcPath);
             dir.setFilter(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
-            QStringList entries = dir.entryList();
-            for (const QString &entry : entries) {
+            for (const auto &entry : dir.entryList()) {
                 if (!copyRecursively(srcPath + "/" + entry, newPath + "/" + entry)) {
                     return false;
                 }

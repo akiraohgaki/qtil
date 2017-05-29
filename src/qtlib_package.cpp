@@ -50,15 +50,13 @@ void Package::setPath(const QString &path)
 #ifdef QTLIB_UNIX
 bool Package::installAsProgram(const QString &newPath)
 {
-    QStringList arguments;
-    arguments << "-m" << "755" << "-p" << path() << newPath;
+    QStringList arguments{"-m", "755", "-p", path(), newPath};
     return execute("install", arguments);
 }
 
 bool Package::installAsFile(const QString &newPath)
 {
-    QStringList arguments;
-    arguments << "-m" << "644" << "-p" << path() << newPath;
+    QStringList arguments{"-m", "644", "-p", path(), newPath};
     return execute("install", arguments);
 }
 
@@ -84,10 +82,10 @@ bool Package::installAsArchive(const QString &destinationDirPath)
     archiveTypes["application/x-rar"] = QString("rar");
     archiveTypes["application/x-rar-compressed"] = QString("rar");
 
-    QString mimeType = QMimeDatabase().mimeTypeForFile(path()).name();
+    auto mimeType = QMimeDatabase().mimeTypeForFile(path()).name();
 
     if (archiveTypes.contains(mimeType)) {
-        QString archiveType = archiveTypes[mimeType].toString();
+        auto archiveType = archiveTypes[mimeType].toString();
         QString program;
         QStringList arguments;
         if (archiveType == "tar") {
@@ -113,15 +111,13 @@ bool Package::installAsArchive(const QString &destinationDirPath)
 
 bool Package::installAsPlasmapkg(const QString &type)
 {
-    QStringList arguments;
-    arguments << "-t" << type << "-i" << path();
+    QStringList arguments{"-t", type, "-i", path()};
     return execute("plasmapkg2", arguments);
 }
 
 bool Package::uninstallAsPlasmapkg(const QString &type)
 {
-    QStringList arguments;
-    arguments << "-t" << type << "-r" << path();
+    QStringList arguments{"-t", type, "-r", path()};
     return execute("plasmapkg2", arguments);
 }
 #endif
@@ -129,20 +125,20 @@ bool Package::uninstallAsPlasmapkg(const QString &type)
 #ifdef Q_OS_ANDROID
 bool Package::installAsApk()
 {
-    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+    auto activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
     if (activity.isValid()) {
-        QString filePath = path();
+        auto filePath = path();
         if (filePath.startsWith("file://", Qt::CaseInsensitive)) {
             filePath.replace("file://localhost", "", Qt::CaseInsensitive);
             filePath.replace("file://", "", Qt::CaseInsensitive);
         }
 
-        QAndroidJniObject fileUri = QAndroidJniObject::fromString("file://" + filePath);
-        QAndroidJniObject uri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", fileUri.object());
-        QAndroidJniObject mimeType = QAndroidJniObject::fromString("application/vnd.android.package-archive");
+        auto fileUri = QAndroidJniObject::fromString("file://" + filePath);
+        auto uri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", fileUri.object());
+        auto mimeType = QAndroidJniObject::fromString("application/vnd.android.package-archive");
 
-        QAndroidJniObject ACTION_VIEW = QAndroidJniObject::getStaticObjectField("android/content/Intent", "ACTION_VIEW", "Ljava/lang/String");
-        QAndroidJniObject FLAG_ACTIVITY_NEW_TASK = QAndroidJniObject::getStaticObjectField("android/content/Intent", "FLAG_ACTIVITY_NEW_TASK", "Ljava/lang/Integer");
+        auto ACTION_VIEW = QAndroidJniObject::getStaticObjectField("android/content/Intent", "ACTION_VIEW", "Ljava/lang/String");
+        auto FLAG_ACTIVITY_NEW_TASK = QAndroidJniObject::getStaticObjectField("android/content/Intent", "FLAG_ACTIVITY_NEW_TASK", "Ljava/lang/Integer");
 
         QAndroidJniObject intent("android/content/Intent", "(Ljava/lang/String;)V", ACTION_VIEW.object());
         intent = intent.callObjectMethod("setDataAndType", "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;", uri.object(), mimeType.object());
