@@ -143,7 +143,7 @@ bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
             QDir dir(srcPath);
             dir.setFilter(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
             QStringList entries = dir.entryList();
-            foreach (const QString &entry, entries) {
+            for (const QString &entry : entries) {
                 if (!copyRecursively(srcPath + "/" + entry, newPath + "/" + entry)) {
                     return false;
                 }
@@ -154,4 +154,4 @@ bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
     return false;
 }
 
-} // namespace qtlib
+}

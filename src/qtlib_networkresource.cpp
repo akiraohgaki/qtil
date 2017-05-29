@@ -286,4 +286,4 @@ NetworkResource *NetworkResource::send(const QUrl &url, bool async)
     return this;
 }
 
-} // namespace qtlib
+}

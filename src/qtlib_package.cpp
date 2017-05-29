@@ -168,4 +168,4 @@ bool Package::execute(const QString &program, const QStringList &arguments)
 }
 #endif
 
-} // namespace qtlib
+}

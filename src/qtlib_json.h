@@ -20,11 +20,11 @@ class Json : public QObject
     Q_OBJECT
 
 public:
-    explicit Json(const QByteArray &json = QByteArray(), QObject *parent = 0);
-    explicit Json(const QJsonObject &object, QObject *parent = 0);
-    explicit Json(const QJsonArray &array, QObject *parent = 0);
+    explicit Json(const QByteArray &json = QByteArray(), QObject *parent = nullptr);
+    explicit Json(const QJsonObject &object, QObject *parent = nullptr);
+    explicit Json(const QJsonArray &array, QObject *parent = nullptr);
 
-    Json(const Json &other, QObject *parent = 0);
+    Json(const Json &other, QObject *parent = nullptr);
     Json &operator =(const Json &other);
 
     QByteArray json() const;
@@ -43,4 +43,4 @@ private:
     QByteArray json_;
 };
 
-} // namespace qtlib
+}

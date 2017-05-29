@@ -22,9 +22,9 @@ class OcsApi : public QObject
     Q_OBJECT
 
 public:
-    explicit OcsApi(const QString &id = "", const QUrl &baseUrl = QUrl(), const QString &userName = "", const QString &password = "", QObject *parent = 0);
+    explicit OcsApi(const QString &id = "", const QUrl &baseUrl = QUrl(), const QString &userName = "", const QString &password = "", QObject *parent = nullptr);
 
-    OcsApi(const OcsApi &other, QObject *parent = 0);
+    OcsApi(const OcsApi &other, QObject *parent = nullptr);
     OcsApi &operator =(const OcsApi &other);
 
     QString id() const;
@@ -55,4 +55,4 @@ private:
     QString password_;
 };
 
-} // namespace qtlib
+}

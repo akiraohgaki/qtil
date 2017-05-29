@@ -194,4 +194,4 @@ QJsonArray OcsApi::getProviderFile(const QUrl &url)
     return providers;
 }
 
-} // namespace qtlib
+}

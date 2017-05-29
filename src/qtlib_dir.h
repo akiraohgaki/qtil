@@ -19,9 +19,9 @@ class Dir : public QObject
     Q_OBJECT
 
 public:
-    explicit Dir(const QString &path = "", QObject *parent = 0);
+    explicit Dir(const QString &path = "", QObject *parent = nullptr);
 
-    Dir(const Dir &other, QObject *parent = 0);
+    Dir(const Dir &other, QObject *parent = nullptr);
     Dir &operator =(const Dir &other);
 
     QString path() const;
@@ -48,4 +48,4 @@ private:
     QString path_;
 };
 
-} // namespace qtlib
+}

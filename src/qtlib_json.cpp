@@ -97,4 +97,4 @@ bool Json::isArray()
     return QJsonDocument::fromJson(json()).isArray();
 }
 
-} // namespace qtlib
+}

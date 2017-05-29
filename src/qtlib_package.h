@@ -18,9 +18,9 @@ class Package : public QObject
     Q_OBJECT
 
 public:
-    explicit Package(const QString &path = "", QObject *parent = 0);
+    explicit Package(const QString &path = "", QObject *parent = nullptr);
 
-    Package(const Package &other, QObject *parent = 0);
+    Package(const Package &other, QObject *parent = nullptr);
     Package &operator =(const Package &other);
 
     QString path() const;
@@ -46,4 +46,4 @@ private:
     QString path_;
 };
 
-} // namespace qtlib
+}

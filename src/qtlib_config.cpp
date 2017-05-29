@@ -59,4 +59,4 @@ bool Config::set(const QString &name, const QJsonObject &object)
     return qtlib::File(configFilePath).writeData(json);
 }
 
-} // namespace qtlib
+}

@@ -109,4 +109,4 @@ bool File::remove()
     return QFile(path()).remove();
 }
 
-} // namespace qtlib
+}

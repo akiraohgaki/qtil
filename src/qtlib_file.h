@@ -18,9 +18,9 @@ class File : public QObject
     Q_OBJECT
 
 public:
-    explicit File(const QString &path = "", QObject *parent = 0);
+    explicit File(const QString &path = "", QObject *parent = nullptr);
 
-    File(const File &other, QObject *parent = 0);
+    File(const File &other, QObject *parent = nullptr);
     File &operator =(const File &other);
 
     QString path() const;
@@ -39,4 +39,4 @@ private:
     QString path_;
 };
 
-} // namespace qtlib
+}
