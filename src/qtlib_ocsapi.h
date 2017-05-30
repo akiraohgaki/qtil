@@ -36,15 +36,15 @@ public:
     QString password() const;
     void setPassword(const QString &password);
 
-    QJsonObject getConfig();
-    QJsonObject checkPerson();
-    QJsonObject getPersonDataSet(const QUrlQuery &query = QUrlQuery());
-    QJsonObject getPersonData(const QString &personId);
-    QJsonObject getPersonSelf();
-    QJsonObject getContentCategories();
-    QJsonObject getContentDataSet(const QUrlQuery &query = QUrlQuery());
-    QJsonObject getContentData(const QString &contentId);
-    QJsonObject getContentDownload(const QString &contentId, const QString &itemId);
+    QJsonObject getConfig() const;
+    QJsonObject checkPerson() const;
+    QJsonObject getPersonDataSet(const QUrlQuery &query = QUrlQuery()) const;
+    QJsonObject getPersonData(const QString &personId) const;
+    QJsonObject getPersonSelf() const;
+    QJsonObject getContentCategories() const;
+    QJsonObject getContentDataSet(const QUrlQuery &query = QUrlQuery()) const;
+    QJsonObject getContentData(const QString &contentId) const;
+    QJsonObject getContentDownload(const QString &contentId, const QString &itemId) const;
 
     static QJsonArray getProviderFile(const QUrl &url);
 

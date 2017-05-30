@@ -27,12 +27,12 @@ public:
     QString path() const;
     void setPath(const QString &path);
 
-    bool exists();
-    QFileInfoList list();
-    bool make();
-    bool copy(const QString &newPath);
-    bool move(const QString &newPath);
-    bool remove();
+    bool exists() const;
+    QFileInfoList list() const;
+    bool make() const;
+    bool copy(const QString &newPath) const;
+    bool move(const QString &newPath) const;
+    bool remove() const;
 
     static QString rootPath();
     static QString tempPath();
@@ -43,7 +43,7 @@ public:
     static QString kdehomePath();
 
 private:
-    bool copyRecursively(const QString &srcPath, const QString &newPath);
+    bool copyRecursively(const QString &srcPath, const QString &newPath) const;
 
     QString path_;
 };

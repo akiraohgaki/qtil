@@ -48,19 +48,19 @@ void Package::setPath(const QString &path)
 }
 
 #ifdef QTLIB_UNIX
-bool Package::installAsProgram(const QString &newPath)
+bool Package::installAsProgram(const QString &newPath) const
 {
     QStringList arguments{"-m", "755", "-p", path(), newPath};
     return execute("install", arguments);
 }
 
-bool Package::installAsFile(const QString &newPath)
+bool Package::installAsFile(const QString &newPath) const
 {
     QStringList arguments{"-m", "644", "-p", path(), newPath};
     return execute("install", arguments);
 }
 
-bool Package::installAsArchive(const QString &destinationDirPath)
+bool Package::installAsArchive(const QString &destinationDirPath) const
 {
     QJsonObject archiveTypes;
     archiveTypes["application/x-tar"] = QString("tar");
@@ -109,13 +109,13 @@ bool Package::installAsArchive(const QString &destinationDirPath)
     return false;
 }
 
-bool Package::installAsPlasmapkg(const QString &type)
+bool Package::installAsPlasmapkg(const QString &type) const
 {
     QStringList arguments{"-t", type, "-i", path()};
     return execute("plasmapkg2", arguments);
 }
 
-bool Package::uninstallAsPlasmapkg(const QString &type)
+bool Package::uninstallAsPlasmapkg(const QString &type) const
 {
     QStringList arguments{"-t", type, "-r", path()};
     return execute("plasmapkg2", arguments);
@@ -123,7 +123,7 @@ bool Package::uninstallAsPlasmapkg(const QString &type)
 #endif
 
 #ifdef Q_OS_ANDROID
-bool Package::installAsApk()
+bool Package::installAsApk() const
 {
     auto activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
     if (activity.isValid()) {
@@ -152,7 +152,7 @@ bool Package::installAsApk()
 #endif
 
 #ifdef QTLIB_UNIX
-bool Package::execute(const QString &program, const QStringList &arguments)
+bool Package::execute(const QString &program, const QStringList &arguments) const
 {
     QProcess process;
     process.start(program, arguments);

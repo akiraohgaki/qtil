@@ -160,7 +160,7 @@ NetworkResource *NetworkResource::deleteResource()
     return send(url(), async());
 }
 
-bool NetworkResource::isFinishedWithNoError()
+bool NetworkResource::isFinishedWithNoError() const
 {
     if (reply()->isFinished() && reply()->error() == QNetworkReply::NoError) {
         return true;

@@ -81,7 +81,7 @@ void OcsApi::setPassword(const QString &password)
     password_ = password;
 }
 
-QJsonObject OcsApi::getConfig()
+QJsonObject OcsApi::getConfig() const
 {
     auto url = baseUrl().resolved(QUrl("config"));
     url.setQuery("format=json");
@@ -89,7 +89,7 @@ QJsonObject OcsApi::getConfig()
     return qtlib::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::checkPerson()
+QJsonObject OcsApi::checkPerson() const
 {
     auto url = baseUrl().resolved(QUrl("person/check"));
     QUrlQuery formData;
@@ -100,7 +100,7 @@ QJsonObject OcsApi::checkPerson()
     return qtlib::Json(resource.post(formData)->readData()).toObject();
 }
 
-QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
+QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query) const
 {
     auto url = baseUrl().resolved(QUrl("person/data"));
     url.setUserName(userName());
@@ -113,7 +113,7 @@ QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
     return qtlib::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::getPersonData(const QString &personId)
+QJsonObject OcsApi::getPersonData(const QString &personId) const
 {
     auto url = baseUrl().resolved(QUrl("person/data/" + personId));
     url.setUserName(userName());
@@ -123,7 +123,7 @@ QJsonObject OcsApi::getPersonData(const QString &personId)
     return qtlib::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::getPersonSelf()
+QJsonObject OcsApi::getPersonSelf() const
 {
     auto url = baseUrl().resolved(QUrl("person/self"));
     url.setUserName(userName());
@@ -133,7 +133,7 @@ QJsonObject OcsApi::getPersonSelf()
     return qtlib::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::getContentCategories()
+QJsonObject OcsApi::getContentCategories() const
 {
     auto url = baseUrl().resolved(QUrl("content/categories"));
     url.setQuery("format=json");
@@ -141,7 +141,7 @@ QJsonObject OcsApi::getContentCategories()
     return qtlib::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query)
+QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query) const
 {
     auto url = baseUrl().resolved(QUrl("content/data"));
     auto newQuery = query;
@@ -152,7 +152,7 @@ QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query)
     return qtlib::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::getContentData(const QString &contentId)
+QJsonObject OcsApi::getContentData(const QString &contentId) const
 {
     auto url = baseUrl().resolved(QUrl("content/data/" + contentId));
     url.setQuery("format=json");
@@ -160,7 +160,7 @@ QJsonObject OcsApi::getContentData(const QString &contentId)
     return qtlib::Json(resource.get()->readData()).toObject();
 }
 
-QJsonObject OcsApi::getContentDownload(const QString &contentId, const QString &itemId)
+QJsonObject OcsApi::getContentDownload(const QString &contentId, const QString &itemId) const
 {
     auto url = baseUrl().resolved(QUrl("content/download/" + contentId + "/" + itemId));
     url.setQuery("format=json");

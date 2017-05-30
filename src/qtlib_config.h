@@ -27,8 +27,8 @@ public:
     QString configDirPath() const;
     void setConfigDirPath(const QString &configDirPath);
 
-    QJsonObject get(const QString &name);
-    bool set(const QString &name, const QJsonObject &object);
+    QJsonObject get(const QString &name) const;
+    bool set(const QString &name, const QJsonObject &object) const;
 
 private:
     QString configDirPath_;

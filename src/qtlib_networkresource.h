@@ -50,7 +50,7 @@ public:
     NetworkResource *put(const QByteArray &contentData, const QString &contentType);
     NetworkResource *put(const QUrlQuery &contentData);
     NetworkResource *deleteResource();
-    bool isFinishedWithNoError();
+    bool isFinishedWithNoError() const;
     QByteArray readData();
     bool saveData(const QString &path);
 
