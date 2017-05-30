@@ -168,7 +168,7 @@ bool NetworkResource::isFinishedWithNoError() const
     return false;
 }
 
-QByteArray NetworkResource::readData()
+QByteArray NetworkResource::readData() const
 {
     QByteArray data;
     if (isFinishedWithNoError()) {
@@ -177,7 +177,7 @@ QByteArray NetworkResource::readData()
     return data;
 }
 
-bool NetworkResource::saveData(const QString &path)
+bool NetworkResource::saveData(const QString &path) const
 {
     if (isFinishedWithNoError()) {
         return qtlib::File(path).writeData(reply()->readAll());
