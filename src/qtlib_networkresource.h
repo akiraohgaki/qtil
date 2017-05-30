@@ -23,10 +23,10 @@ class NetworkResource : public QObject
     Q_OBJECT
 
 public:
-    explicit NetworkResource(const QString &id = "", const QUrl &url = QUrl(), bool async = true, QObject *parent = 0);
+    explicit NetworkResource(const QString &id = "", const QUrl &url = QUrl(), bool async = true, QObject *parent = nullptr);
     ~NetworkResource();
 
-    NetworkResource(const NetworkResource &other, QObject *parent = 0);
+    NetworkResource(const NetworkResource &other, QObject *parent = nullptr);
     NetworkResource &operator =(const NetworkResource &other);
 
     QString id() const;
@@ -50,9 +50,9 @@ public:
     NetworkResource *put(const QByteArray &contentData, const QString &contentType);
     NetworkResource *put(const QUrlQuery &contentData);
     NetworkResource *deleteResource();
-    bool isFinishedWithNoError();
-    QByteArray readData();
-    bool saveData(const QString &path);
+    bool isFinishedWithNoError() const;
+    QByteArray readData() const;
+    bool saveData(const QString &path) const;
 
 signals:
     void finished(NetworkResource *resource);
@@ -87,4 +87,4 @@ private:
     QByteArray contentData_;
 };
 
-} // namespace qtlib
+}

@@ -42,12 +42,12 @@ void Dir::setPath(const QString &path)
     path_ = path;
 }
 
-bool Dir::exists()
+bool Dir::exists() const
 {
     return QDir(path()).exists();
 }
 
-QFileInfoList Dir::list()
+QFileInfoList Dir::list() const
 {
     QDir dir(path());
     dir.setFilter(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
@@ -55,7 +55,7 @@ QFileInfoList Dir::list()
     return dir.entryInfoList();
 }
 
-bool Dir::make()
+bool Dir::make() const
 {
     // This function will create all parent directories
     QDir dir(path());
@@ -65,18 +65,18 @@ bool Dir::make()
     return false;
 }
 
-bool Dir::copy(const QString &newPath)
+bool Dir::copy(const QString &newPath) const
 {
     // This function will copy files recursively
     return copyRecursively(path(), newPath);
 }
 
-bool Dir::move(const QString &newPath)
+bool Dir::move(const QString &newPath) const
 {
     return QDir(path()).rename(path(), newPath);
 }
 
-bool Dir::remove()
+bool Dir::remove() const
 {
     // This function will remove files recursively
     return QDir(path()).removeRecursively();
@@ -118,14 +118,14 @@ QString Dir::kdehomePath()
     // https://userbase.kde.org/KDE_System_Administration/Environment_Variables
 
     // KDE 4 maybe uses $KDEHOME
-    QString kdehomePath = QString::fromLocal8Bit(qgetenv("KDEHOME").constData());
+    auto kdehomePath = QString::fromLocal8Bit(qgetenv("KDEHOME").constData());
     if (kdehomePath.isEmpty()) {
         kdehomePath = homePath() + "/.kde";
     }
     return kdehomePath;
 }
 
-bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
+bool Dir::copyRecursively(const QString &srcPath, const QString &newPath) const
 {
     QFileInfo fileInfo(srcPath);
     if (fileInfo.isSymLink() && !fileInfo.exists()) {
@@ -137,13 +137,12 @@ bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
     }
     else if (fileInfo.isDir()) {
         QDir newDir(newPath);
-        QString newDirName = newDir.dirName();
+        auto newDirName = newDir.dirName();
         newDir.cdUp();
         if (newDir.mkdir(newDirName)) {
             QDir dir(srcPath);
             dir.setFilter(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
-            QStringList entries = dir.entryList();
-            foreach (const QString &entry, entries) {
+            for (const auto &entry : dir.entryList()) {
                 if (!copyRecursively(srcPath + "/" + entry, newPath + "/" + entry)) {
                     return false;
                 }
@@ -154,4 +153,4 @@ bool Dir::copyRecursively(const QString &srcPath, const QString &newPath)
     return false;
 }
 
-} // namespace qtlib
+}

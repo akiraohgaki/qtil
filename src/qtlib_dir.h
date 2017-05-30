@@ -19,20 +19,20 @@ class Dir : public QObject
     Q_OBJECT
 
 public:
-    explicit Dir(const QString &path = "", QObject *parent = 0);
+    explicit Dir(const QString &path = "", QObject *parent = nullptr);
 
-    Dir(const Dir &other, QObject *parent = 0);
+    Dir(const Dir &other, QObject *parent = nullptr);
     Dir &operator =(const Dir &other);
 
     QString path() const;
     void setPath(const QString &path);
 
-    bool exists();
-    QFileInfoList list();
-    bool make();
-    bool copy(const QString &newPath);
-    bool move(const QString &newPath);
-    bool remove();
+    bool exists() const;
+    QFileInfoList list() const;
+    bool make() const;
+    bool copy(const QString &newPath) const;
+    bool move(const QString &newPath) const;
+    bool remove() const;
 
     static QString rootPath();
     static QString tempPath();
@@ -43,9 +43,9 @@ public:
     static QString kdehomePath();
 
 private:
-    bool copyRecursively(const QString &srcPath, const QString &newPath);
+    bool copyRecursively(const QString &srcPath, const QString &newPath) const;
 
     QString path_;
 };
 
-} // namespace qtlib
+}

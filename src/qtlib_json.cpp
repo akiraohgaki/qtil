@@ -62,22 +62,22 @@ void Json::fromArray(const QJsonArray &array)
     setJson(QJsonDocument(array).toJson());
 }
 
-QByteArray Json::toJson()
+QByteArray Json::toJson() const
 {
     return QJsonDocument::fromJson(json()).toJson();
 }
 
-QJsonObject Json::toObject()
+QJsonObject Json::toObject() const
 {
     return QJsonDocument::fromJson(json()).object();
 }
 
-QJsonArray Json::toArray()
+QJsonArray Json::toArray() const
 {
     return QJsonDocument::fromJson(json()).array();
 }
 
-bool Json::isValid()
+bool Json::isValid() const
 {
     QJsonParseError parseError;
     QJsonDocument::fromJson(json(), &parseError);
@@ -87,14 +87,14 @@ bool Json::isValid()
     return false;
 }
 
-bool Json::isObject()
+bool Json::isObject() const
 {
     return QJsonDocument::fromJson(json()).isObject();
 }
 
-bool Json::isArray()
+bool Json::isArray() const
 {
     return QJsonDocument::fromJson(json()).isArray();
 }
 
-} // namespace qtlib
+}

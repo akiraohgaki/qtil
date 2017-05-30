@@ -18,25 +18,25 @@ class File : public QObject
     Q_OBJECT
 
 public:
-    explicit File(const QString &path = "", QObject *parent = 0);
+    explicit File(const QString &path = "", QObject *parent = nullptr);
 
-    File(const File &other, QObject *parent = 0);
+    File(const File &other, QObject *parent = nullptr);
     File &operator =(const File &other);
 
     QString path() const;
     void setPath(const QString &path);
 
-    bool exists();
-    QByteArray readData();
-    bool writeData(const QByteArray &data);
-    QString readText();
-    bool writeText(const QString &data);
-    bool copy(const QString &newPath);
-    bool move(const QString &newPath);
-    bool remove();
+    bool exists() const;
+    QByteArray readData() const;
+    bool writeData(const QByteArray &data) const;
+    QString readText() const;
+    bool writeText(const QString &data) const;
+    bool copy(const QString &newPath) const;
+    bool move(const QString &newPath) const;
+    bool remove() const;
 
 private:
     QString path_;
 };
 
-} // namespace qtlib
+}

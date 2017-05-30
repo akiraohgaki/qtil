@@ -160,7 +160,7 @@ NetworkResource *NetworkResource::deleteResource()
     return send(url(), async());
 }
 
-bool NetworkResource::isFinishedWithNoError()
+bool NetworkResource::isFinishedWithNoError() const
 {
     if (reply()->isFinished() && reply()->error() == QNetworkReply::NoError) {
         return true;
@@ -168,7 +168,7 @@ bool NetworkResource::isFinishedWithNoError()
     return false;
 }
 
-QByteArray NetworkResource::readData()
+QByteArray NetworkResource::readData() const
 {
     QByteArray data;
     if (isFinishedWithNoError()) {
@@ -177,7 +177,7 @@ QByteArray NetworkResource::readData()
     return data;
 }
 
-bool NetworkResource::saveData(const QString &path)
+bool NetworkResource::saveData(const QString &path) const
 {
     if (isFinishedWithNoError()) {
         return qtlib::File(path).writeData(reply()->readAll());
@@ -253,7 +253,7 @@ void NetworkResource::setContentData(const QByteArray &contentData)
 
 NetworkResource *NetworkResource::send(const QUrl &url, bool async)
 {
-    QNetworkRequest networkRequest = request();
+    auto networkRequest = request();
     networkRequest.setUrl(url);
     if (method() == "HEAD") {
         setReply(manager()->head(networkRequest));
@@ -286,4 +286,4 @@ NetworkResource *NetworkResource::send(const QUrl &url, bool async)
     return this;
 }
 
-} // namespace qtlib
+}

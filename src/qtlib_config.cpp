@@ -41,22 +41,22 @@ void Config::setConfigDirPath(const QString &configDirPath)
     configDirPath_ = configDirPath;
 }
 
-QJsonObject Config::get(const QString &name)
+QJsonObject Config::get(const QString &name) const
 {
-    QString configFilePath = configDirPath() + "/" + name + ".json";
-    QByteArray json = qtlib::File(configFilePath).readData();
+    auto configFilePath = configDirPath() + "/" + name + ".json";
+    auto json = qtlib::File(configFilePath).readData();
     if (json.isEmpty()) {
         json = QString("{}").toUtf8(); // Blank JSON data as default
     }
     return qtlib::Json(json).toObject();
 }
 
-bool Config::set(const QString &name, const QJsonObject &object)
+bool Config::set(const QString &name, const QJsonObject &object) const
 {
-    QString configFilePath = configDirPath() + "/" + name + ".json";
-    QByteArray json = qtlib::Json(object).toJson();
+    auto configFilePath = configDirPath() + "/" + name + ".json";
+    auto json = qtlib::Json(object).toJson();
     qtlib::Dir(configDirPath()).make();
     return qtlib::File(configFilePath).writeData(json);
 }
 
-} // namespace qtlib
+}

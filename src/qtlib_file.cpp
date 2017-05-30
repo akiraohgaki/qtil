@@ -41,12 +41,12 @@ void File::setPath(const QString &path)
     path_ = path;
 }
 
-bool File::exists()
+bool File::exists() const
 {
     return QFile(path()).exists();
 }
 
-QByteArray File::readData()
+QByteArray File::readData() const
 {
     QByteArray data;
     QFile file(path());
@@ -57,7 +57,7 @@ QByteArray File::readData()
     return data;
 }
 
-bool File::writeData(const QByteArray &data)
+bool File::writeData(const QByteArray &data) const
 {
     QFile file(path());
     if (file.open(QIODevice::WriteOnly)) {
@@ -68,7 +68,7 @@ bool File::writeData(const QByteArray &data)
     return false;
 }
 
-QString File::readText()
+QString File::readText() const
 {
     QString data;
     QFile file(path());
@@ -81,7 +81,7 @@ QString File::readText()
     return data;
 }
 
-bool File::writeText(const QString &data)
+bool File::writeText(const QString &data) const
 {
     QFile file(path());
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -94,19 +94,19 @@ bool File::writeText(const QString &data)
     return false;
 }
 
-bool File::copy(const QString &newPath)
+bool File::copy(const QString &newPath) const
 {
     return QFile(path()).copy(newPath);
 }
 
-bool File::move(const QString &newPath)
+bool File::move(const QString &newPath) const
 {
     return QFile(path()).rename(newPath);
 }
 
-bool File::remove()
+bool File::remove() const
 {
     return QFile(path()).remove();
 }
 
-} // namespace qtlib
+}
