@@ -105,7 +105,7 @@ QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query)
     auto url = baseUrl().resolved(QUrl("person/data"));
     url.setUserName(userName());
     url.setPassword(password());
-    QUrlQuery newQuery(query);
+    auto newQuery = query;
     newQuery.removeQueryItem("format");
     newQuery.addQueryItem("format", "json");
     url.setQuery(newQuery);
@@ -144,7 +144,7 @@ QJsonObject OcsApi::getContentCategories()
 QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query)
 {
     auto url = baseUrl().resolved(QUrl("content/data"));
-    QUrlQuery newQuery(query);
+    auto newQuery = query;
     newQuery.removeQueryItem("format");
     newQuery.addQueryItem("format", "json");
     url.setQuery(newQuery);
@@ -184,7 +184,7 @@ QJsonArray OcsApi::getProviderFile(const QUrl &url)
         }
         auto elementName = reader.name().toString();
         if (!providers.isEmpty() && whitelist.contains(elementName)) {
-            int i(providers.size() - 1);
+            auto i = providers.size() - 1;
             auto provider = providers[i].toObject();
             provider[elementName] = reader.readElementText();
             providers[i] = provider;
