@@ -18,7 +18,7 @@ class File : public QObject
     Q_OBJECT
 
 public:
-    explicit File(const QString &path = "", QObject *parent = nullptr);
+    explicit File(const QString &path = QString(), QObject *parent = nullptr);
 
     File(const File &other, QObject *parent = nullptr);
     File &operator =(const File &other);

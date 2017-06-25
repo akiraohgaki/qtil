@@ -23,7 +23,7 @@ class NetworkResource : public QObject
     Q_OBJECT
 
 public:
-    explicit NetworkResource(const QString &id = "", const QUrl &url = QUrl(), bool async = true, QObject *parent = nullptr);
+    explicit NetworkResource(const QString &id = QString(), const QUrl &url = QUrl(), bool async = true, QObject *parent = nullptr);
     ~NetworkResource();
 
     NetworkResource(const NetworkResource &other, QObject *parent = nullptr);
