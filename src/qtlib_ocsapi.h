@@ -22,7 +22,7 @@ class OcsApi : public QObject
     Q_OBJECT
 
 public:
-    explicit OcsApi(const QString &id = "", const QUrl &baseUrl = QUrl(), const QString &userName = "", const QString &password = "", QObject *parent = nullptr);
+    explicit OcsApi(const QString &id = QString(), const QUrl &baseUrl = QUrl(), const QString &userName = QString(), const QString &password = QString(), QObject *parent = nullptr);
 
     OcsApi(const OcsApi &other, QObject *parent = nullptr);
     OcsApi &operator =(const OcsApi &other);

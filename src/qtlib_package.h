@@ -18,7 +18,7 @@ class Package : public QObject
     Q_OBJECT
 
 public:
-    explicit Package(const QString &path = "", QObject *parent = nullptr);
+    explicit Package(const QString &path = QString(), QObject *parent = nullptr);
 
     Package(const Package &other, QObject *parent = nullptr);
     Package &operator =(const Package &other);
@@ -30,8 +30,8 @@ public:
     bool installAsProgram(const QString &newPath) const;
     bool installAsFile(const QString &newPath) const;
     bool installAsArchive(const QString &destinationDirPath) const;
-    bool installAsPlasmapkg(const QString &type = "plasmoid") const;
-    bool uninstallAsPlasmapkg(const QString &type = "plasmoid") const;
+    bool installAsPlasmapkg(const QString &type = QString("plasmoid")) const;
+    bool uninstallAsPlasmapkg(const QString &type = QString("plasmoid")) const;
 #endif
 
 #ifdef Q_OS_ANDROID
