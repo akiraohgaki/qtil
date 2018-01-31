@@ -26,7 +26,7 @@ public:
     QString path() const;
     void setPath(const QString &path);
 
-#ifdef QTIL_UNIX
+#ifdef QTIL_OS_UNIX
     bool installAsProgram(const QString &newPath) const;
     bool installAsFile(const QString &newPath) const;
     bool installAsArchive(const QString &destinationDirPath) const;
@@ -39,7 +39,7 @@ public:
 #endif
 
 private:
-#ifdef QTIL_UNIX
+#ifdef QTIL_OS_UNIX
     bool execute(const QString &program, const QStringList &arguments) const;
 #endif
 

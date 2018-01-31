@@ -9,7 +9,7 @@
 
 #include "qtil_package.h"
 
-#ifdef QTIL_UNIX
+#ifdef QTIL_OS_UNIX
 #include <QJsonObject>
 #include <QMimeDatabase>
 #include <QProcess>
@@ -47,7 +47,7 @@ void Package::setPath(const QString &path)
     path_ = path;
 }
 
-#ifdef QTIL_UNIX
+#ifdef QTIL_OS_UNIX
 bool Package::installAsProgram(const QString &newPath) const
 {
     QStringList arguments{"-m", "755", "-p", path(), newPath};
@@ -151,7 +151,7 @@ bool Package::installAsApk() const
 }
 #endif
 
-#ifdef QTIL_UNIX
+#ifdef QTIL_OS_UNIX
 bool Package::execute(const QString &program, const QStringList &arguments) const
 {
     QProcess process;

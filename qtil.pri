@@ -25,7 +25,7 @@ SOURCES += \
 INCLUDEPATH += $${PWD}/src
 
 unix:!ios:!android {
-    DEFINES += QTIL_UNIX
+    DEFINES += QTIL_OS_UNIX
 }
 
 android {
