@@ -1,18 +1,18 @@
 /**
- * qtlib
+ * qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0
- * @link        https://github.com/akiraohgaki/qtlib
+ * @link        https://github.com/akiraohgaki/qtil
  */
 
-#include "qtlib_json.h"
+#include "qtil_json.h"
 
 #include <QJsonDocument>
 #include <QJsonParseError>
 
-namespace qtlib {
+namespace qtil {
 
 Json::Json(const QByteArray &json, QObject *parent)
     : QObject(parent), json_(json)

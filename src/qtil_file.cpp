@@ -1,19 +1,19 @@
 /**
- * qtlib
+ * qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0
- * @link        https://github.com/akiraohgaki/qtlib
+ * @link        https://github.com/akiraohgaki/qtil
  */
 
-#include "qtlib_file.h"
+#include "qtil_file.h"
 
 #include <QIODevice>
 #include <QTextStream>
 #include <QFile>
 
-namespace qtlib {
+namespace qtil {
 
 File::File(const QString &path, QObject *parent)
     : QObject(parent), path_(path)

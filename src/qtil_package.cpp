@@ -1,15 +1,15 @@
 /**
- * qtlib
+ * qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0
- * @link        https://github.com/akiraohgaki/qtlib
+ * @link        https://github.com/akiraohgaki/qtil
  */
 
-#include "qtlib_package.h"
+#include "qtil_package.h"
 
-#ifdef QTLIB_UNIX
+#ifdef QTIL_OS_UNIX
 #include <QJsonObject>
 #include <QMimeDatabase>
 #include <QProcess>
@@ -19,7 +19,7 @@
 #include <QAndroidJniObject>
 #endif
 
-namespace qtlib {
+namespace qtil {
 
 Package::Package(const QString &path, QObject *parent)
     : QObject(parent), path_(path)
@@ -47,7 +47,7 @@ void Package::setPath(const QString &path)
     path_ = path;
 }
 
-#ifdef QTLIB_UNIX
+#ifdef QTIL_OS_UNIX
 bool Package::installAsProgram(const QString &newPath) const
 {
     QStringList arguments{"-m", "755", "-p", path(), newPath};
@@ -151,7 +151,7 @@ bool Package::installAsApk() const
 }
 #endif
 
-#ifdef QTLIB_UNIX
+#ifdef QTIL_OS_UNIX
 bool Package::execute(const QString &program, const QStringList &arguments) const
 {
     QProcess process;

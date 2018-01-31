@@ -1,19 +1,19 @@
 /**
- * qtlib
+ * qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0
- * @link        https://github.com/akiraohgaki/qtlib
+ * @link        https://github.com/akiraohgaki/qtil
  */
 
-#include "qtlib_config.h"
+#include "qtil_config.h"
 
-#include "qtlib_file.h"
-#include "qtlib_dir.h"
-#include "qtlib_json.h"
+#include "qtil_file.h"
+#include "qtil_dir.h"
+#include "qtil_json.h"
 
-namespace qtlib {
+namespace qtil {
 
 Config::Config(const QString &configDirPath, QObject *parent)
     : QObject(parent), configDirPath_(configDirPath)
@@ -44,19 +44,19 @@ void Config::setConfigDirPath(const QString &configDirPath)
 QJsonObject Config::get(const QString &name) const
 {
     auto configFilePath = configDirPath() + "/" + name + ".json";
-    auto json = qtlib::File(configFilePath).readData();
+    auto json = qtil::File(configFilePath).readData();
     if (json.isEmpty()) {
         json = QString("{}").toUtf8(); // Blank JSON data as default
     }
-    return qtlib::Json(json).toObject();
+    return qtil::Json(json).toObject();
 }
 
 bool Config::set(const QString &name, const QJsonObject &object) const
 {
     auto configFilePath = configDirPath() + "/" + name + ".json";
-    auto json = qtlib::Json(object).toJson();
-    qtlib::Dir(configDirPath()).make();
-    return qtlib::File(configFilePath).writeData(json);
+    auto json = qtil::Json(object).toJson();
+    qtil::Dir(configDirPath()).make();
+    return qtil::File(configFilePath).writeData(json);
 }
 
 }

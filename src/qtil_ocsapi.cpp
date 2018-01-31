@@ -1,20 +1,20 @@
 /**
- * qtlib
+ * qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0
- * @link        https://github.com/akiraohgaki/qtlib
+ * @link        https://github.com/akiraohgaki/qtil
  */
 
-#include "qtlib_ocsapi.h"
+#include "qtil_ocsapi.h"
 
 #include <QXmlStreamReader>
 
-#include "qtlib_json.h"
-#include "qtlib_networkresource.h"
+#include "qtil_json.h"
+#include "qtil_networkresource.h"
 
-namespace qtlib {
+namespace qtil {
 
 // OCS-API Specification
 // https://www.freedesktop.org/wiki/Specifications/open-collaboration-services/
@@ -85,8 +85,8 @@ QJsonObject OcsApi::getConfig() const
 {
     auto url = baseUrl().resolved(QUrl("config"));
     url.setQuery("format=json");
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonObject OcsApi::checkPerson() const
@@ -96,8 +96,8 @@ QJsonObject OcsApi::checkPerson() const
     formData.addQueryItem("login", userName());
     formData.addQueryItem("password", password());
     formData.addQueryItem("format", "json");
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.post(formData)->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.post(formData)->readData()).toObject();
 }
 
 QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query) const
@@ -109,8 +109,8 @@ QJsonObject OcsApi::getPersonDataSet(const QUrlQuery &query) const
     newQuery.removeQueryItem("format");
     newQuery.addQueryItem("format", "json");
     url.setQuery(newQuery);
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonObject OcsApi::getPersonData(const QString &personId) const
@@ -119,8 +119,8 @@ QJsonObject OcsApi::getPersonData(const QString &personId) const
     url.setUserName(userName());
     url.setPassword(password());
     url.setQuery("format=json");
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonObject OcsApi::getPersonSelf() const
@@ -129,16 +129,16 @@ QJsonObject OcsApi::getPersonSelf() const
     url.setUserName(userName());
     url.setPassword(password());
     url.setQuery("format=json");
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonObject OcsApi::getContentCategories() const
 {
     auto url = baseUrl().resolved(QUrl("content/categories"));
     url.setQuery("format=json");
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query) const
@@ -148,30 +148,30 @@ QJsonObject OcsApi::getContentDataSet(const QUrlQuery &query) const
     newQuery.removeQueryItem("format");
     newQuery.addQueryItem("format", "json");
     url.setQuery(newQuery);
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonObject OcsApi::getContentData(const QString &contentId) const
 {
     auto url = baseUrl().resolved(QUrl("content/data/" + contentId));
     url.setQuery("format=json");
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonObject OcsApi::getContentDownload(const QString &contentId, const QString &itemId) const
 {
     auto url = baseUrl().resolved(QUrl("content/download/" + contentId + "/" + itemId));
     url.setQuery("format=json");
-    qtlib::NetworkResource resource(url.toString(), url, false);
-    return qtlib::Json(resource.get()->readData()).toObject();
+    qtil::NetworkResource resource(url.toString(), url, false);
+    return qtil::Json(resource.get()->readData()).toObject();
 }
 
 QJsonArray OcsApi::getProviderFile(const QUrl &url)
 {
     QJsonArray providers;
-    qtlib::NetworkResource resource(url.toString(), url, false);
+    qtil::NetworkResource resource(url.toString(), url, false);
     QXmlStreamReader reader(resource.get()->readData());
     QStringList whitelist{"id", "location", "name", "icon", "termsofuse", "register"};
     while (!reader.atEnd() && !reader.hasError()) {
