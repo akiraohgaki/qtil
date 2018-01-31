@@ -1,17 +1,17 @@
 /**
- * qtlib
+ * qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0
- * @link        https://github.com/akiraohgaki/qtlib
+ * @link        https://github.com/akiraohgaki/qtil
  */
 
 #pragma once
 
 #include <QObject>
 
-namespace qtlib {
+namespace qtil {
 
 class Package : public QObject
 {
@@ -26,7 +26,7 @@ public:
     QString path() const;
     void setPath(const QString &path);
 
-#ifdef QTLIB_UNIX
+#ifdef QTIL_UNIX
     bool installAsProgram(const QString &newPath) const;
     bool installAsFile(const QString &newPath) const;
     bool installAsArchive(const QString &destinationDirPath) const;
@@ -39,7 +39,7 @@ public:
 #endif
 
 private:
-#ifdef QTLIB_UNIX
+#ifdef QTIL_UNIX
     bool execute(const QString &program, const QStringList &arguments) const;
 #endif
 

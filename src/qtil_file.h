@@ -1,17 +1,17 @@
 /**
- * qtlib
+ * qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
  * @license     https://opensource.org/licenses/LGPL-3.0
- * @link        https://github.com/akiraohgaki/qtlib
+ * @link        https://github.com/akiraohgaki/qtil
  */
 
 #pragma once
 
 #include <QObject>
 
-namespace qtlib {
+namespace qtil {
 
 class File : public QObject
 {

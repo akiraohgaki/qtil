@@ -1,4 +1,4 @@
-# qtlib
+# qtil
 
 A library for Qt app.
 
