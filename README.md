@@ -1,6 +1,6 @@
 # qtil
 
-A library for Qt app.
+A utility library for Qt app.
 
 Copyright: Akira Ohgaki
 
