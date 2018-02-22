@@ -86,25 +86,27 @@ bool Package::installAsArchive(const QString &destinationDirPath) const
 
     if (archiveTypes.contains(mimeType)) {
         auto archiveType = archiveTypes[mimeType].toString();
-        QString program;
-        QStringList arguments;
-        if (archiveType == "tar") {
-            program = "tar";
-            arguments << "-xf" << path() << "-C" << destinationDirPath;
+
+        QStringList tarArguments{"-xf", path(), "-C", destinationDirPath};
+        QStringList unzipArguments{"-o", path(), "-d", destinationDirPath};
+        QStringList sevenzArguments{"x", path(), "-o" + destinationDirPath}; // No space between -o and directory
+        QStringList unrarArguments{"e", path(), destinationDirPath};
+        QStringList unarArguments{"-f", path(), "-o", destinationDirPath};
+
+        if (archiveType == "tar" && execute("tar", tarArguments)) {
+            return true;
         }
-        else if (archiveType == "zip") {
-            program = "unzip";
-            arguments << "-o" << path() << "-d" << destinationDirPath;
+        else if (archiveType == "zip" && execute("unzip", unzipArguments)) {
+            return true;
         }
-        else if (archiveType == "7z") {
-            program = "7z";
-            arguments << "x" << path() << "-o" + destinationDirPath; // No space between -o and directory
+        else if (archiveType == "7z" && (execute("7z", sevenzArguments) || execute("7zr", sevenzArguments))) {
+            return true;
         }
-        else if (archiveType == "rar") {
-            program = "unrar";
-            arguments << "e" << path() << destinationDirPath;
+        else if (archiveType == "rar" && execute("unrar", unrarArguments)) {
+            return true;
         }
-        return execute(program, arguments);
+        // Those suitable unarchiver may not installed so try with unar
+        return execute("unar", unarArguments);
     }
     return false;
 }
