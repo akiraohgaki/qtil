@@ -1,5 +1,5 @@
 /**
- * qtil
+ * Qtil
  *
  * @author      Akira Ohgaki <akiraohgaki@gmail.com>
  * @copyright   Akira Ohgaki
