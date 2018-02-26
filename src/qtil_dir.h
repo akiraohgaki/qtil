@@ -12,7 +12,7 @@
 #include <QObject>
 #include <QFileInfoList>
 
-namespace qtil {
+namespace Qtil {
 
 class Dir : public QObject
 {

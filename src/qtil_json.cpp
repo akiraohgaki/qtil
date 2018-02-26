@@ -12,7 +12,7 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 
-namespace qtil {
+namespace Qtil {
 
 Json::Json(const QByteArray &json, QObject *parent)
     : QObject(parent), json_(json)

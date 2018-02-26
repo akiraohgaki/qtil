@@ -15,7 +15,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-namespace qtil {
+namespace Qtil {
 
 class OcsApi : public QObject
 {

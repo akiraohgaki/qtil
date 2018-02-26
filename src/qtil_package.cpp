@@ -19,7 +19,7 @@
 #include <QAndroidJniObject>
 #endif
 
-namespace qtil {
+namespace Qtil {
 
 Package::Package(const QString &path, QObject *parent)
     : QObject(parent), path_(path)

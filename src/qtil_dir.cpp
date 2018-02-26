@@ -14,7 +14,7 @@
 #include <QFileInfo>
 #include <QStandardPaths>
 
-namespace qtil {
+namespace Qtil {
 
 Dir::Dir(const QString &path, QObject *parent)
     : QObject(parent), path_(path)

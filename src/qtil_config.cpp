@@ -13,7 +13,7 @@
 #include "qtil_dir.h"
 #include "qtil_json.h"
 
-namespace qtil {
+namespace Qtil {
 
 Config::Config(const QString &configDirPath, QObject *parent)
     : QObject(parent), configDirPath_(configDirPath)
@@ -44,19 +44,19 @@ void Config::setConfigDirPath(const QString &configDirPath)
 QJsonObject Config::get(const QString &name) const
 {
     auto configFilePath = configDirPath() + "/" + name + ".json";
-    auto json = qtil::File(configFilePath).readData();
+    auto json = Qtil::File(configFilePath).readData();
     if (json.isEmpty()) {
         json = QString("{}").toUtf8(); // Blank JSON data as default
     }
-    return qtil::Json(json).toObject();
+    return Qtil::Json(json).toObject();
 }
 
 bool Config::set(const QString &name, const QJsonObject &object) const
 {
     auto configFilePath = configDirPath() + "/" + name + ".json";
-    auto json = qtil::Json(object).toJson();
-    qtil::Dir(configDirPath()).make();
-    return qtil::File(configFilePath).writeData(json);
+    auto json = Qtil::Json(object).toJson();
+    Qtil::Dir(configDirPath()).make();
+    return Qtil::File(configFilePath).writeData(json);
 }
 
 }

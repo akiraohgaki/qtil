@@ -11,7 +11,7 @@
 
 #include <QObject>
 
-namespace qtil {
+namespace Qtil {
 
 class Package : public QObject
 {

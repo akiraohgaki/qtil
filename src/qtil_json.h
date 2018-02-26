@@ -13,7 +13,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-namespace qtil {
+namespace Qtil {
 
 class Json : public QObject
 {

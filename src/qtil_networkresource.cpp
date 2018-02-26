@@ -13,7 +13,7 @@
 
 #include "qtil_file.h"
 
-namespace qtil {
+namespace Qtil {
 
 NetworkResource::NetworkResource(const QString &id, const QUrl &url, bool async, QObject *parent)
     : QObject(parent), id_(id), url_(url), async_(async)
@@ -180,7 +180,7 @@ QByteArray NetworkResource::readData() const
 bool NetworkResource::saveData(const QString &path) const
 {
     if (isFinishedWithNoError()) {
-        return qtil::File(path).writeData(reply()->readAll());
+        return Qtil::File(path).writeData(reply()->readAll());
     }
     return false;
 }

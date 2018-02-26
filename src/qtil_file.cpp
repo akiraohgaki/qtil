@@ -13,7 +13,7 @@
 #include <QTextStream>
 #include <QFile>
 
-namespace qtil {
+namespace Qtil {
 
 File::File(const QString &path, QObject *parent)
     : QObject(parent), path_(path)

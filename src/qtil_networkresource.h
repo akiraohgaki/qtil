@@ -16,7 +16,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-namespace qtil {
+namespace Qtil {
 
 class NetworkResource : public QObject
 {
