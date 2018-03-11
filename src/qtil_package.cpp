@@ -105,7 +105,7 @@ bool Package::installAsArchive(const QString &destinationDirPath) const
         else if (archiveType == "rar" && execute("unrar", unrarArguments)) {
             return true;
         }
-        // Those suitable unarchiver may not installed so try with unar
+        // Those suitable unarchiver may not installed, try with unar
         return execute("unar", unarArguments);
     }
     return false;
