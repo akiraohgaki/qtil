@@ -4,6 +4,6 @@
 
 A utility library for Qt app.
 
-Copyright: Akira Ohgaki
+Copyright: 2016, Akira Ohgaki
 
 License: LGPL-3+
