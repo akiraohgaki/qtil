@@ -16,22 +16,22 @@ namespace Qtil {
 
 class Config : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit Config(const QString &configDirPath = QString(), QObject *parent = nullptr);
+  explicit Config(const QString &configDirPath = QString(), QObject *parent = nullptr);
 
-    Config(const Config &other, QObject *parent = nullptr);
-    Config &operator =(const Config &other);
+  Config(const Config &other, QObject *parent = nullptr);
+  Config &operator =(const Config &other);
 
-    QString configDirPath() const;
-    void setConfigDirPath(const QString &configDirPath);
+  QString configDirPath() const;
+  void setConfigDirPath(const QString &configDirPath);
 
-    QJsonObject get(const QString &name) const;
-    bool set(const QString &name, const QJsonObject &object) const;
+  QJsonObject get(const QString &name) const;
+  bool set(const QString &name, const QJsonObject &object) const;
 
 private:
-    QString configDirPath_;
+  QString configDirPath_;
 };
 
 }

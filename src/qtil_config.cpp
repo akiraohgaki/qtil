@@ -16,47 +16,47 @@
 namespace Qtil {
 
 Config::Config(const QString &configDirPath, QObject *parent)
-    : QObject(parent), configDirPath_(configDirPath)
+  : QObject(parent), configDirPath_(configDirPath)
 {}
 
 Config::Config(const Config &other, QObject *parent)
-    : QObject(parent)
+  : QObject(parent)
 {
-    setConfigDirPath(other.configDirPath());
+  setConfigDirPath(other.configDirPath());
 }
 
 Config &Config::operator =(const Config &other)
 {
-    setConfigDirPath(other.configDirPath());
-    return *this;
+  setConfigDirPath(other.configDirPath());
+  return *this;
 }
 
 QString Config::configDirPath() const
 {
-    return configDirPath_;
+  return configDirPath_;
 }
 
 void Config::setConfigDirPath(const QString &configDirPath)
 {
-    configDirPath_ = configDirPath;
+  configDirPath_ = configDirPath;
 }
 
 QJsonObject Config::get(const QString &name) const
 {
-    auto configFilePath = configDirPath() + "/" + name + ".json";
-    auto json = Qtil::File(configFilePath).readData();
-    if (json.isEmpty()) {
-        json = QString("{}").toUtf8(); // Blank JSON data as default
-    }
-    return Qtil::Json(json).toObject();
+  auto configFilePath = configDirPath() + "/" + name + ".json";
+  auto json = Qtil::File(configFilePath).readData();
+  if (json.isEmpty()) {
+    json = QString("{}").toUtf8(); // Blank JSON data as default
+  }
+  return Qtil::Json(json).toObject();
 }
 
 bool Config::set(const QString &name, const QJsonObject &object) const
 {
-    auto configFilePath = configDirPath() + "/" + name + ".json";
-    auto json = Qtil::Json(object).toJson();
-    Qtil::Dir(configDirPath()).make();
-    return Qtil::File(configFilePath).writeData(json);
+  auto configFilePath = configDirPath() + "/" + name + ".json";
+  auto json = Qtil::Json(object).toJson();
+  Qtil::Dir(configDirPath()).make();
+  return Qtil::File(configFilePath).writeData(json);
 }
 
 }
